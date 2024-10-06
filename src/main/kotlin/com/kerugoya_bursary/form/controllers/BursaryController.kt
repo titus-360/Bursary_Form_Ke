@@ -29,26 +29,26 @@ class BursaryController(
     }
 
     @GetMapping("get-by-id/{id}")
-    fun getById(@PathVariable id: Long): ResponseEntity<BursaryApplication> {
+    fun getBursaryById(@PathVariable id: Long): ResponseEntity<BursaryApplication> {
         return ResponseEntity.ok(service.getBursaryApplicationById(id))
     }
 
     @PostMapping
-    fun create(
+    fun createBursary(
         @RequestBody bursaryApplication: BursaryApplication
     ): ResponseEntity<BursaryApplication> {
         return ResponseEntity.ok(service.createBursaryApplication(bursaryApplication))
     }
 
     @PutMapping("update")
-    fun update(
+    fun updateBursary(
         @RequestBody bursaryApplication: BursaryApplication
     ): ResponseEntity<BursaryApplication> {
         return ResponseEntity.ok(service.updateBursaryApplication(bursaryApplication))
     }
 
     @DeleteMapping("delete/{id}")
-    fun delete(@PathVariable id: Long): ResponseEntity<Void> {
+    fun deleteBursaryById(@PathVariable id: Long): ResponseEntity<Void> {
         service.deleteBursaryApplication(id)
 
         return ResponseEntity.noContent().build()

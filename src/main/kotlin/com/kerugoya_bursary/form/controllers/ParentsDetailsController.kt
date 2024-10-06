@@ -17,7 +17,7 @@ class ParentsDetailsController(
 ) {
 
     @GetMapping
-    fun getAll(
+    fun getAllParents(
         @PageableDefault(
             size = 50,
             page = 0,
@@ -29,26 +29,26 @@ class ParentsDetailsController(
     }
 
     @PostMapping
-    fun create(
+    fun createParent(
         @RequestBody parentDetails: ParentDetails
     ): ResponseEntity<ParentDetails> {
         return ResponseEntity.ok(service.createParentDetails(parentDetails))
     }
 
     @GetMapping("get-by-id/{id}")
-    fun getById(@PathVariable id: Long): ResponseEntity<ParentDetails> {
+    fun getParentsById(@PathVariable id: Long): ResponseEntity<ParentDetails> {
         return ResponseEntity.ok(service.getParentDetailsById(id))
     }
 
     @PutMapping("update")
-    fun update(
+    fun updateParents(
         @RequestBody parentDetails: ParentDetails
     ): ResponseEntity<ParentDetails> {
         return ResponseEntity.ok(service.updateParentDetails(parentDetails))
     }
 
     @DeleteMapping("delete/{id}")
-    fun delete(@PathVariable id: Long): ResponseEntity<Void> {
+    fun deleteParentById(@PathVariable id: Long): ResponseEntity<Void> {
         service.deleteParentDetails(id)
 
         return ResponseEntity.noContent().build()

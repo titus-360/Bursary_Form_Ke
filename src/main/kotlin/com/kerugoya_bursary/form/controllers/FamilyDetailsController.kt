@@ -16,7 +16,7 @@ class FamilyDetailsController(
 ) {
 
     @GetMapping
-    fun getAll(
+    fun getAllFamilyDetails(
         @PageableDefault(
             size = 50,
             page = 0,
@@ -28,26 +28,26 @@ class FamilyDetailsController(
     }
 
     @PostMapping
-    fun create(
+    fun createFamilyDetail(
         @RequestBody familyDetails: FamilyDetails
     ): ResponseEntity<FamilyDetails> {
         return ResponseEntity.ok(service.createFamilyDetails(familyDetails))
     }
 
     @GetMapping("get-by-id/{id}")
-    fun getById(@PathVariable id: Long): ResponseEntity<FamilyDetails> {
+    fun getFamilyDetailById(@PathVariable id: Long): ResponseEntity<FamilyDetails> {
         return ResponseEntity.ok(service.getFamilyDetailsById(id))
     }
 
     @PutMapping("update")
-    fun update(
+    fun updateFamilyDetail(
         @RequestBody familyDetails: FamilyDetails
     ): ResponseEntity<FamilyDetails> {
         return ResponseEntity.ok(service.updateFamilyDetails(familyDetails))
     }
 
     @DeleteMapping("delete/{id}")
-    fun delete(@PathVariable id: Long): ResponseEntity<Void> {
+    fun deleteFamilyDetailById(@PathVariable id: Long): ResponseEntity<Void> {
         service.deleteFamilyDetails(id)
 
         return ResponseEntity.noContent().build()

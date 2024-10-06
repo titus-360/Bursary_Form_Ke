@@ -16,7 +16,7 @@ class SiblingsController (
 ){
 
     @GetMapping
-    fun getAll(
+    fun getAllSiblings(
         @PageableDefault(
             size = 50,
             page = 0,
@@ -28,26 +28,26 @@ class SiblingsController (
     }
 
     @PostMapping
-    fun create(
+    fun createSibling(
         @RequestBody siblings: Siblings
     ): ResponseEntity<Siblings> {
         return ResponseEntity.ok(service.createSiblings(siblings))
     }
 
     @GetMapping("get-by-id/{id}")
-    fun getById(@PathVariable id: Long): ResponseEntity<Siblings> {
+    fun getSiblingById(@PathVariable id: Long): ResponseEntity<Siblings> {
         return ResponseEntity.ok(service.getSiblingsById(id))
     }
 
     @PutMapping("update")
-    fun update(
+    fun updateSibling(
         @RequestBody siblings: Siblings
     ): ResponseEntity<Siblings> {
         return ResponseEntity.ok(service.updateSiblings(siblings))
     }
 
     @DeleteMapping("delete/{id}")
-    fun delete(@PathVariable id: Long): ResponseEntity<Void> {
+    fun deleteSiblingById(@PathVariable id: Long): ResponseEntity<Void> {
         service.deleteSiblings(id)
 
         return ResponseEntity.noContent().build()

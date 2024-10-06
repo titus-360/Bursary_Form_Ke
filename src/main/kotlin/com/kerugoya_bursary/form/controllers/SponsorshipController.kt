@@ -16,7 +16,7 @@ class SponsorshipController(
 ) {
 
     @GetMapping
-    fun getAll(
+    fun getAllSponsors(
         @PageableDefault(
             size = 50,
             page = 0,
@@ -28,26 +28,26 @@ class SponsorshipController(
     }
 
     @GetMapping("get-by-id/{id}")
-    fun getById(@PathVariable id: Long): ResponseEntity<SponsorshipDetails> {
+    fun getSponsorById(@PathVariable id: Long): ResponseEntity<SponsorshipDetails> {
         return ResponseEntity.ok(service.getSponsorshipDetailsById(id))
     }
 
     @PostMapping
-    fun create(
+    fun createSponsor(
         @RequestBody sponsorshipDetails: SponsorshipDetails
     ): ResponseEntity<SponsorshipDetails> {
         return ResponseEntity.ok(service.createSponsorshipDetails(sponsorshipDetails))
     }
 
     @PutMapping("update")
-    fun update(
+    fun updateSponsor(
         @RequestBody sponsorshipDetails: SponsorshipDetails
     ): ResponseEntity<SponsorshipDetails> {
         return ResponseEntity.ok(service.updateSponsorshipDetails(sponsorshipDetails))
     }
 
     @DeleteMapping("delete/{id}")
-    fun delete(@PathVariable id: Long): ResponseEntity<Void> {
+    fun deleteSponsorsById(@PathVariable id: Long): ResponseEntity<Void> {
         service.deleteSponsorshipDetails(id)
 
         return ResponseEntity.noContent().build()
