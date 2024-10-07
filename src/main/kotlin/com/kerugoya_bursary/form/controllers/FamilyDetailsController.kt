@@ -2,6 +2,7 @@ package com.kerugoya_bursary.form.controllers
 
 import com.kerugoya_bursary.form.models.FamilyDetails
 import com.kerugoya_bursary.form.services.FamilyDetailsService
+import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import org.springframework.data.web.PageableDefault
@@ -22,9 +23,9 @@ class FamilyDetailsController(
             page = 0,
             sort = ["id"],
             direction = Sort.Direction.DESC
-        ) pageable: Pageable):ResponseEntity<List<FamilyDetails>>
-     {
-        return ResponseEntity.ok(service.getAllFamilyDetails(pageable).content)
+        ) pageable: Pageable
+    ): ResponseEntity<Page<FamilyDetails>> {
+        return ResponseEntity.ok(service.getAllFamilyDetails(pageable))
     }
 
     @PostMapping("save-family-details")
