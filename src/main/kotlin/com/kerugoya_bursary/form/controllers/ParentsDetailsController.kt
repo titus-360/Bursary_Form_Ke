@@ -2,7 +2,6 @@ package com.kerugoya_bursary.form.controllers
 
 import com.kerugoya_bursary.form.models.ParentDetails
 import com.kerugoya_bursary.form.services.ParentDetailsService
-import com.kerugoya_bursary.form.services.serviceImp.ParentDetailsServiceImp
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
@@ -12,12 +11,12 @@ import org.springframework.web.bind.annotation.*
 
 
 @RestController
-@RequestMapping("kerugoya_bursary/parentsDetails/")
+@RequestMapping("parents-details")
 class ParentsDetailsController(
     private val service: ParentDetailsService
 ) {
 
-    @GetMapping("get-all-parents")
+    @GetMapping
     fun getAllParents(
         @PageableDefault(
             size = 50,
@@ -29,26 +28,27 @@ class ParentsDetailsController(
         return ResponseEntity.ok(service.getAllParentDetails(pageable))
     }
 
-    @PostMapping("save-parent")
+    @PostMapping
     fun createParent(
         @RequestBody parentDetails: ParentDetails
     ): ResponseEntity<ParentDetails> {
         return ResponseEntity.ok(service.createParentDetails(parentDetails))
     }
 
-    @GetMapping("get-parent-by-id/{id}")
+    @GetMapping("{id}")
     fun getParentsById(@PathVariable id: Long): ResponseEntity<ParentDetails> {
         return ResponseEntity.ok(service.getParentDetailsById(id))
     }
 
-    @PutMapping("update-parent")
+    @PutMapping("{id}")
     fun updateParents(
+        @PathVariable id: Long,
         @RequestBody parentDetails: ParentDetails
     ): ResponseEntity<ParentDetails> {
         return ResponseEntity.ok(service.updateParentDetails(parentDetails))
     }
 
-    @DeleteMapping("delete-parent-by-id/{id}")
+    @DeleteMapping("{id}")
     fun deleteParentById(@PathVariable id: Long): ResponseEntity<Void> {
         service.deleteParentDetails(id)
 

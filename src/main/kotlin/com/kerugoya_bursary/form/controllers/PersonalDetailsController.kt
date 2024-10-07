@@ -10,12 +10,12 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("kerugoya_bursary/personal-details/")
+@RequestMapping("personal-details")
 class PersonalDetailsController(
     private val service: PersonalDetailsService
 ) {
 
-    @GetMapping("get-all-personal-details")
+    @GetMapping
     fun getAllPersonalDetails(
         @PageableDefault(
             size = 50,
@@ -27,27 +27,28 @@ class PersonalDetailsController(
         return ResponseEntity.ok(service.getAllPersonalDetails(pageable))
     }
 
-    @PostMapping("save-personal-details")
+    @PostMapping
     fun createPersonalDetail(
         @RequestBody personalDetails: PersonalDetails
     ): ResponseEntity<PersonalDetails> {
         return ResponseEntity.ok(service.savePersonalDetails(personalDetails))
     }
 
-    @GetMapping("get-personal-details-by-id/{id}")
+    @GetMapping("{id}")
     fun getPersonalDetailById(@PathVariable id: Long): ResponseEntity<PersonalDetails> {
         return ResponseEntity.ok(service.getPersonalDetailsById(id))
     }
 
-    @PutMapping("update-personal-details")
+    @PutMapping("{id}")
     fun updatePersonalDetail(
+        @PathVariable id: Long,
         @RequestBody personalDetails: PersonalDetails
     ): ResponseEntity<PersonalDetails> {
         return ResponseEntity.ok(service.updatePersonalDetails(personalDetails))
     }
 
 
-    @DeleteMapping("delete-personal-details-by-id/{id}")
+    @DeleteMapping("{id}")
     fun deletePersonalDetailById(@PathVariable id: Long):ResponseEntity<Void>  {
         service.deletePersonalDetailsById(id)
         return ResponseEntity.noContent().build()

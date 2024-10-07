@@ -10,13 +10,13 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 
-@RequestMapping("kerugoya_bursary/bursary/")
 @RestController
+@RequestMapping("bursaries")
 class BursaryController(
     private val service: BursaryService
 ) {
 
-    @GetMapping("get-all-bursaries")
+    @GetMapping
     fun getBursary(
         @PageableDefault(
             size = 50,
@@ -29,26 +29,27 @@ class BursaryController(
         return ResponseEntity.ok(service.getAllBursaryApplications(pageable))
     }
 
-    @GetMapping("get-bursary-by-id/{id}")
+    @GetMapping("{id}")
     fun getBursaryById(@PathVariable id: Long): ResponseEntity<BursaryApplication> {
         return ResponseEntity.ok(service.getBursaryApplicationById(id))
     }
 
-    @PostMapping("save-bursary")
+    @PostMapping
     fun createBursary(
         @RequestBody bursaryApplication: BursaryApplication
     ): ResponseEntity<BursaryApplication> {
         return ResponseEntity.ok(service.createBursaryApplication(bursaryApplication))
     }
 
-    @PutMapping("update-bursary")
+    @PutMapping("{id}")
     fun updateBursary(
+        @PathVariable id: Long,
         @RequestBody bursaryApplication: BursaryApplication
     ): ResponseEntity<BursaryApplication> {
         return ResponseEntity.ok(service.updateBursaryApplication(bursaryApplication))
     }
 
-    @DeleteMapping("delete-bursary-by-id/{id}")
+    @DeleteMapping("{id}")
     fun deleteBursaryById(@PathVariable id: Long): ResponseEntity<Void> {
         service.deleteBursaryApplication(id)
 

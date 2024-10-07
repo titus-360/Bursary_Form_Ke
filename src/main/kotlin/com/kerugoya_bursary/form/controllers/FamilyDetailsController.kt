@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.*
 
 
 @RestController
-@RequestMapping("kerugoya_bursary/family-details/")
+@RequestMapping("family-details")
 class FamilyDetailsController(
     private val service: FamilyDetailsService
 ) {
 
-    @GetMapping("get-all-family-details")
+    @GetMapping
     fun getAllFamilyDetails(
         @PageableDefault(
             size = 50,
@@ -28,26 +28,27 @@ class FamilyDetailsController(
         return ResponseEntity.ok(service.getAllFamilyDetails(pageable))
     }
 
-    @PostMapping("save-family-details")
+    @PostMapping
     fun createFamilyDetail(
         @RequestBody familyDetails: FamilyDetails
     ): ResponseEntity<FamilyDetails> {
         return ResponseEntity.ok(service.createFamilyDetails(familyDetails))
     }
 
-    @GetMapping("get-by-family-details-by-id/{id}")
+    @GetMapping("{id}")
     fun getFamilyDetailById(@PathVariable id: Long): ResponseEntity<FamilyDetails> {
         return ResponseEntity.ok(service.getFamilyDetailsById(id))
     }
 
-    @PutMapping("update-family-details")
+    @PutMapping("{id}")
     fun updateFamilyDetail(
+        @PathVariable id: Long,
         @RequestBody familyDetails: FamilyDetails
     ): ResponseEntity<FamilyDetails> {
         return ResponseEntity.ok(service.updateFamilyDetails(familyDetails))
     }
 
-    @DeleteMapping("delete-family-details-by-id/{id}")
+    @DeleteMapping("{id}")
     fun deleteFamilyDetailById(@PathVariable id: Long): ResponseEntity<Void> {
         service.deleteFamilyDetails(id)
 
