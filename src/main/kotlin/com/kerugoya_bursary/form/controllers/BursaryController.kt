@@ -2,6 +2,7 @@ package com.kerugoya_bursary.form.controllers
 
 import com.kerugoya_bursary.form.models.BursaryApplication
 import com.kerugoya_bursary.form.services.BursaryService
+import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import org.springframework.data.web.PageableDefault
@@ -23,9 +24,9 @@ class BursaryController(
             sort = ["id"],
             direction = Sort.Direction.DESC
         ) pageable: Pageable
-    ): ResponseEntity<List<BursaryApplication>>
+    ): ResponseEntity<Page<BursaryApplication>>
     {
-        return ResponseEntity.ok(service.getAllBursaryApplications(pageable).content)
+        return ResponseEntity.ok(service.getAllBursaryApplications(pageable))
     }
 
     @GetMapping("get-bursary-by-id/{id}")

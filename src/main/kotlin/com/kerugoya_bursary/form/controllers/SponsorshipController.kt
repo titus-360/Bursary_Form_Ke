@@ -2,6 +2,7 @@ package com.kerugoya_bursary.form.controllers
 
 import com.kerugoya_bursary.form.models.SponsorshipDetails
 import com.kerugoya_bursary.form.services.SponsorshipDetailsService
+import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import org.springframework.data.web.PageableDefault
@@ -23,8 +24,8 @@ class SponsorshipController(
             sort = ["id"],
             direction = Sort.Direction.DESC
         ) pageable: Pageable
-    ): ResponseEntity<List<SponsorshipDetails>> {
-        return ResponseEntity.ok(service.getAllSponsorshipDetails(pageable).content)
+    ): ResponseEntity<Page<SponsorshipDetails>> {
+        return ResponseEntity.ok(service.getAllSponsorshipDetails(pageable))
     }
 
     @GetMapping("get-sponsor-by-id/{id}")

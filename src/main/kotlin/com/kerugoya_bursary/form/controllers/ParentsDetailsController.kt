@@ -3,6 +3,7 @@ package com.kerugoya_bursary.form.controllers
 import com.kerugoya_bursary.form.models.ParentDetails
 import com.kerugoya_bursary.form.services.ParentDetailsService
 import com.kerugoya_bursary.form.services.serviceImp.ParentDetailsServiceImp
+import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import org.springframework.data.web.PageableDefault
@@ -24,8 +25,8 @@ class ParentsDetailsController(
             sort = ["id"],
             direction = Sort.Direction.DESC
         ) pageable: Pageable
-    ): ResponseEntity<List<ParentDetails>> {
-        return ResponseEntity.ok(service.getAllParentDetails(pageable).content)
+    ): ResponseEntity<Page<ParentDetails>> {
+        return ResponseEntity.ok(service.getAllParentDetails(pageable))
     }
 
     @PostMapping("save-parent")

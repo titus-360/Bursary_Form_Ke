@@ -2,6 +2,7 @@ package com.kerugoya_bursary.form.controllers
 
 import com.kerugoya_bursary.form.models.Siblings
 import com.kerugoya_bursary.form.services.SiblingsService
+import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import org.springframework.data.web.PageableDefault
@@ -23,8 +24,8 @@ class SiblingsController (
             sort = ["id"],
             direction = Sort.Direction.DESC
         ) pageable: Pageable
-    ): ResponseEntity<List<Siblings>> {
-        return ResponseEntity.ok(service.getAllSiblings(pageable).content)
+    ): ResponseEntity<Page<Siblings>> {
+        return ResponseEntity.ok(service.getAllSiblings(pageable))
     }
 
     @PostMapping("save-siblings")
