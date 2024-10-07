@@ -1,4 +1,4 @@
-package com.visitoron.config.swagger
+package com.kerugoya_bursary.form.config.swagger
 
 import io.swagger.v3.oas.models.OpenAPI
 import io.swagger.v3.oas.models.info.Info
