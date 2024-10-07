@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.*
 
 
 @RestController
-@RequestMapping("kerugoya_bursary/sponsorship")
+@RequestMapping("kerugoya_bursary/sponsorship/")
 class SponsorshipController(
     private val service: SponsorshipDetailsService
 ) {
 
-    @GetMapping
+    @GetMapping("get-all-sponsors")
     fun getAllSponsors(
         @PageableDefault(
             size = 50,
@@ -27,26 +27,26 @@ class SponsorshipController(
         return ResponseEntity.ok(service.getAllSponsorshipDetails(pageable).content)
     }
 
-    @GetMapping("get-by-id/{id}")
+    @GetMapping("get-sponsor-by-id/{id}")
     fun getSponsorById(@PathVariable id: Long): ResponseEntity<SponsorshipDetails> {
         return ResponseEntity.ok(service.getSponsorshipDetailsById(id))
     }
 
-    @PostMapping
+    @PostMapping("save-sponsor")
     fun createSponsor(
         @RequestBody sponsorshipDetails: SponsorshipDetails
     ): ResponseEntity<SponsorshipDetails> {
         return ResponseEntity.ok(service.createSponsorshipDetails(sponsorshipDetails))
     }
 
-    @PutMapping("update")
+    @PutMapping("update-sponsor")
     fun updateSponsor(
         @RequestBody sponsorshipDetails: SponsorshipDetails
     ): ResponseEntity<SponsorshipDetails> {
         return ResponseEntity.ok(service.updateSponsorshipDetails(sponsorshipDetails))
     }
 
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping("delete-sponsor-by-id/{id}")
     fun deleteSponsorsById(@PathVariable id: Long): ResponseEntity<Void> {
         service.deleteSponsorshipDetails(id)
 

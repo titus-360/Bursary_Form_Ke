@@ -14,7 +14,7 @@ class PersonalDetailsController(
     private val service: PersonalDetailsService
 ) {
 
-    @GetMapping
+    @GetMapping("get-all-personal-details")
     fun getAllPersonalDetails(
         @PageableDefault(
             size = 50,
@@ -26,19 +26,19 @@ class PersonalDetailsController(
         return ResponseEntity.ok(service.getAllPersonalDetails(pageable).content)
     }
 
-    @PostMapping
+    @PostMapping("save-personal-details")
     fun createPersonalDetail(
         @RequestBody personalDetails: PersonalDetails
     ): ResponseEntity<PersonalDetails> {
         return ResponseEntity.ok(service.savePersonalDetails(personalDetails))
     }
 
-    @GetMapping("get-by-id/{id}")
+    @GetMapping("get-personal-details-by-id/{id}")
     fun getPersonalDetailById(@PathVariable id: Long): ResponseEntity<PersonalDetails> {
         return ResponseEntity.ok(service.getPersonalDetailsById(id))
     }
 
-    @PutMapping("update")
+    @PutMapping("update-personal-details")
     fun updatePersonalDetail(
         @RequestBody personalDetails: PersonalDetails
     ): ResponseEntity<PersonalDetails> {
@@ -46,7 +46,7 @@ class PersonalDetailsController(
     }
 
 
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping("delete-personal-details-by-id/{id}")
     fun deletePersonalDetailById(@PathVariable id: Long):ResponseEntity<Void>  {
         service.deletePersonalDetailsById(id)
         return ResponseEntity.noContent().build()

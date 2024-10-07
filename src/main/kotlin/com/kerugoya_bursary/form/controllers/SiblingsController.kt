@@ -9,13 +9,13 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 
-@RequestMapping("kerugoya_bursary/siblings")
+@RequestMapping("kerugoya_bursary/siblings/")
 @RestController
 class SiblingsController (
     private val service: SiblingsService
 ){
 
-    @GetMapping
+    @GetMapping("get-all-siblings")
     fun getAllSiblings(
         @PageableDefault(
             size = 50,
@@ -27,26 +27,26 @@ class SiblingsController (
         return ResponseEntity.ok(service.getAllSiblings(pageable).content)
     }
 
-    @PostMapping
+    @PostMapping("save-siblings")
     fun createSibling(
         @RequestBody siblings: Siblings
     ): ResponseEntity<Siblings> {
         return ResponseEntity.ok(service.createSiblings(siblings))
     }
 
-    @GetMapping("get-by-id/{id}")
+    @GetMapping("get-sibilinig-by-id/{id}")
     fun getSiblingById(@PathVariable id: Long): ResponseEntity<Siblings> {
         return ResponseEntity.ok(service.getSiblingsById(id))
     }
 
-    @PutMapping("update")
+    @PutMapping("update-sibling")
     fun updateSibling(
         @RequestBody siblings: Siblings
     ): ResponseEntity<Siblings> {
         return ResponseEntity.ok(service.updateSiblings(siblings))
     }
 
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping("delete-sibling-by-id/{id}")
     fun deleteSiblingById(@PathVariable id: Long): ResponseEntity<Void> {
         service.deleteSiblings(id)
 

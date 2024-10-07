@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.*
 
 
 @RestController
-@RequestMapping("kerugoya_bursary/parentsDetails")
+@RequestMapping("kerugoya_bursary/parentsDetails/")
 class ParentsDetailsController(
     private val service: ParentDetailsService
 ) {
 
-    @GetMapping
+    @GetMapping("get-all-parents")
     fun getAllParents(
         @PageableDefault(
             size = 50,
@@ -28,26 +28,26 @@ class ParentsDetailsController(
         return ResponseEntity.ok(service.getAllParentDetails(pageable).content)
     }
 
-    @PostMapping
+    @PostMapping("save-parent")
     fun createParent(
         @RequestBody parentDetails: ParentDetails
     ): ResponseEntity<ParentDetails> {
         return ResponseEntity.ok(service.createParentDetails(parentDetails))
     }
 
-    @GetMapping("get-by-id/{id}")
+    @GetMapping("get-parent-by-id/{id}")
     fun getParentsById(@PathVariable id: Long): ResponseEntity<ParentDetails> {
         return ResponseEntity.ok(service.getParentDetailsById(id))
     }
 
-    @PutMapping("update")
+    @PutMapping("update-parent")
     fun updateParents(
         @RequestBody parentDetails: ParentDetails
     ): ResponseEntity<ParentDetails> {
         return ResponseEntity.ok(service.updateParentDetails(parentDetails))
     }
 
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping("delete-parent-by-id/{id}")
     fun deleteParentById(@PathVariable id: Long): ResponseEntity<Void> {
         service.deleteParentDetails(id)
 
