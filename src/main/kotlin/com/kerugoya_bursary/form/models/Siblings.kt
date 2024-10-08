@@ -20,14 +20,14 @@ data class Siblings(
     var id: Long? = 0,
 
     @Column(name = "primary_school")
-    val primarySchool: Int?,
+    var primarySchool: Int?,
 
     @Column(name = "secondary_school")
-    val secondarySchool: Int?,
+    var secondarySchool: Int?,
 
     @Column(name = "tertiary_college")
-    val tertiaryCollege: Int?,
+    var tertiaryCollege: Int?,
 
     @Column(name = "university")
-    val university: Int?
+    var university: Int?
 )
