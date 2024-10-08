@@ -1,5 +1,6 @@
 package com.kerugoya_bursary.form.controllers
 
+import com.kerugoya_bursary.form.dtos.PersonalDetailsDto
 import com.kerugoya_bursary.form.models.PersonalDetails
 import com.kerugoya_bursary.form.services.PersonalDetailsService
 import org.springframework.data.domain.Page
@@ -42,14 +43,14 @@ class PersonalDetailsController(
     @PutMapping("{id}")
     fun updatePersonalDetail(
         @PathVariable id: Long,
-        @RequestBody personalDetails: PersonalDetails
+        @RequestBody personalDetailsDto: PersonalDetailsDto
     ): ResponseEntity<PersonalDetails> {
-        return ResponseEntity.ok(service.updatePersonalDetails(personalDetails))
+        return ResponseEntity.ok(service.updatePersonalDetails(id, personalDetailsDto))
     }
 
 
     @DeleteMapping("{id}")
-    fun deletePersonalDetailById(@PathVariable id: Long):ResponseEntity<Void>  {
+    fun deletePersonalDetailById(@PathVariable id: Long): ResponseEntity<Void> {
         service.deletePersonalDetailsById(id)
         return ResponseEntity.noContent().build()
     }

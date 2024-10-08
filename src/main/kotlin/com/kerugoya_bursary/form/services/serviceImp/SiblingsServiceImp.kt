@@ -31,12 +31,11 @@ class SiblingsServiceImp(
         val existingSiblings = siblingsRepository.findById(id).orElseThrow {
             throw ResourceNotFoundException("Siblings with id $id not found")
         }
-        existingSiblings.apply {
-            existingSiblings.primarySchool = siblingsDto.primarySchool
-            existingSiblings.secondarySchool = siblingsDto.secondarySchool
-            existingSiblings.university = siblingsDto.university
-            existingSiblings.tertiaryCollege = siblingsDto.tertiaryCollege
-        }
+        existingSiblings.primarySchool = siblingsDto.primarySchool
+        existingSiblings.secondarySchool = siblingsDto.secondarySchool
+        existingSiblings.university = siblingsDto.university
+        existingSiblings.tertiaryCollege = siblingsDto.tertiaryCollege
+
         return siblingsRepository.save(existingSiblings)
     }
 
