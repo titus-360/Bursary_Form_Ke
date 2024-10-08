@@ -1,5 +1,6 @@
 package com.kerugoya_bursary.form.controllers
 
+import com.kerugoya_bursary.form.dtos.SponsorshipDetailsDto
 import com.kerugoya_bursary.form.models.SponsorshipDetails
 import com.kerugoya_bursary.form.services.SponsorshipDetailsService
 import org.springframework.data.domain.Page
@@ -43,9 +44,9 @@ class SponsorshipController(
     @PutMapping("{id}")
     fun updateSponsor(
         @PathVariable id: Long,
-        @RequestBody sponsorshipDetails: SponsorshipDetails
+        @RequestBody sponsorshipDetailsDto: SponsorshipDetailsDto
     ): ResponseEntity<SponsorshipDetails> {
-        return ResponseEntity.ok(service.updateSponsorshipDetails(sponsorshipDetails))
+        return ResponseEntity.ok(service.updateSponsorshipDetails(id, sponsorshipDetailsDto))
     }
 
     @DeleteMapping("{id}")
