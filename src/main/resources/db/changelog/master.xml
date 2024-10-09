@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="create-postgres-schema" author="denis-gitonga">
+        <sql dbms="postgresql" endDelimiter=";">
+            CREATE SCHEMA kerugoya_bursary;
+            CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+        </sql>
+    </changeSet>
+    
+    <include file="db/changelog/siblings.xml" relativeToChangelogFile="false" />
+    <include file="db/changelog/sponsorship_details.xml" relativeToChangelogFile="false"/>
+    <include file="db/changelog/personal_details.xml" relativeToChangelogFile="false"/>
+    <include file="db/changelog/family_details.xml" relativeToChangelogFile="false"/>
+    <include file="db/changelog/parent_details.xml" relativeToChangelogFile="false"/>
+    <include file="db/changelog/bursary_application.xml" relativeToChangelogFile="false" />
+</databaseChangeLog>
