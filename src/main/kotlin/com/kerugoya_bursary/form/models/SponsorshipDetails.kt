@@ -1,6 +1,7 @@
 package com.kerugoya_bursary.form.models
 
 import jakarta.persistence.*
+import java.math.BigDecimal
 
 /**
  *
@@ -20,11 +21,11 @@ data class SponsorshipDetails(
     var id: Long? = 0,
 
     @Column(name = "fees_required")
-    val feesRequired: Int,
+    var feesRequired: BigDecimal? = null,
 
     @Column(name = "bursary_received")
-    val bursaryReceived: Int?,
+    var bursaryReceived: BigDecimal? = null,
 
     @Column(name = "fees_balance")
-    val feesBalance: Int
+    var feesBalance: BigDecimal? = null
 )

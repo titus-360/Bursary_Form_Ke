@@ -21,50 +21,50 @@ data class PersonalDetails(
     var id: Long? = 0,
 
     @Column(name = "surname")
-    val surname: String,
+    var surname: String,
 
     @Column(name = "first_name")
-    val firstName: String,
+    var firstName: String,
 
     @Column(name = "other_names")
-    val otherNames: String?,
+    var otherNames: String?,
 
     @Column(name = "id_number")
-    val idNumber: String?,
+    var idNumber: String?,
 
     @Column(name = "gender")
-    val gender: String,
+    var gender: String,
 
     @Column(name = "dob")
-    val dob: String,
+    var dob: String,
 
     @Column(name = "phone")
-    val phone: String,
+    var phone: String,
 
     @Column(name = "county")
-    val county: String?,
+    var county: String?,
 
     @Column(name = "sub_county")
-    val subCounty: String?,
+    var subCounty: String?,
 
     @Column(name = "ward")
-    val ward: String?,
+    var ward: String?,
 
     @Column(name = "school")
-    val school: String,
+    var school: String,
 
     @Column(name = "education_level")
-    val educationLevel: String,
+    var educationLevel: String,
 
     @Column(name = "admission_number")
-    val admissionNumber: String?,
+    var admissionNumber: String?,
 
     @Column(name = "course")
-    val course: String?,
+    var course: String?,
 
     @Column(name = "disability")
-    val disability: Boolean?,
+    var disability: Boolean?,
 
     @Column(name = "education_financier")
-    val educationFinancier: String
+    var educationFinancier: String
 )

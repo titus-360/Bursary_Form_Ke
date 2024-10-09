@@ -1,5 +1,6 @@
 package com.kerugoya_bursary.form.services.serviceImp
 
+import com.kerugoya_bursary.form.dtos.SiblingsDto
 import com.kerugoya_bursary.form.exception.ResourceNotFoundException
 import com.kerugoya_bursary.form.models.Siblings
 import com.kerugoya_bursary.form.repositories.SiblingsRepository
@@ -11,8 +12,7 @@ import org.springframework.stereotype.Service
 @Service
 class SiblingsServiceImp(
     private val siblingsRepository: SiblingsRepository
-): SiblingsService
-{
+) : SiblingsService {
     override fun getAllSiblings(pageable: Pageable): Page<Siblings> {
         return siblingsRepository.findAll(pageable)
     }
@@ -27,8 +27,16 @@ class SiblingsServiceImp(
         }
     }
 
-    override fun updateSiblings(siblings: Siblings): Siblings {
-        return siblingsRepository.save(siblings)
+    override fun updateSiblings(id: Long, siblingsDto: SiblingsDto): Siblings {
+        val existingSiblings = siblingsRepository.findById(id).orElseThrow {
+            throw ResourceNotFoundException("Siblings with id $id not found")
+        }
+        existingSiblings.primarySchool = siblingsDto.primarySchool
+        existingSiblings.secondarySchool = siblingsDto.secondarySchool
+        existingSiblings.university = siblingsDto.university
+        existingSiblings.tertiaryCollege = siblingsDto.tertiaryCollege
+
+        return siblingsRepository.save(existingSiblings)
     }
 
     override fun deleteSiblings(id: Long) {

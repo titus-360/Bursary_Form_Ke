@@ -1,5 +1,6 @@
 package com.kerugoya_bursary.form.services.serviceImp
 
+import com.kerugoya_bursary.form.dtos.PersonalDetailsDto
 import com.kerugoya_bursary.form.exception.ResourceNotFoundException
 import com.kerugoya_bursary.form.models.PersonalDetails
 import com.kerugoya_bursary.form.repositories.PersonalDetailsRepository
@@ -21,14 +22,36 @@ class PersonalDetailsServiceImp(
             .orElseThrow { ResourceNotFoundException("Personal Details with id $id not found") }
     }
 
-    override fun updatePersonalDetails(personalDetails: PersonalDetails): PersonalDetails {
+    override fun updatePersonalDetails(id: Long, personalDetailsDto: PersonalDetailsDto): PersonalDetails {
+        val personalDetails = personalDetailsRepository.findById(id)
+            .orElseThrow { ResourceNotFoundException("Personal Details with id $id not found") }
+
+        personalDetails.apply {
+            firstName = personalDetailsDto.firstName
+            surname = personalDetailsDto.surname
+            otherNames = personalDetailsDto.otherNames
+            idNumber = personalDetailsDto.idNumber
+            gender = personalDetailsDto.gender
+            dob = personalDetailsDto.dob
+            phone = personalDetailsDto.phone
+            county = personalDetailsDto.county
+            subCounty = personalDetailsDto.subCounty
+            ward = personalDetailsDto.ward
+            school = personalDetailsDto.school
+            educationLevel = personalDetailsDto.educationLevel
+            admissionNumber = personalDetailsDto.admissionNumber
+            course = personalDetailsDto.course
+            disability = personalDetailsDto.disability
+            educationFinancier = personalDetailsDto.educationFinancier
+        }
         return personalDetailsRepository.save(personalDetails)
+
     }
 
     override fun deletePersonalDetailsById(id: Long) {
         val personalDetails = personalDetailsRepository.findById(id)
             .orElseThrow { ResourceNotFoundException("Personal Details with id $id not found") }
-        if(personalDetails != null) {
+        if (personalDetails != null) {
             personalDetailsRepository.delete(personalDetails)
         }
     }

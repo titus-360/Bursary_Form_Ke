@@ -1,5 +1,6 @@
 package com.kerugoya_bursary.form.services
 
+import com.kerugoya_bursary.form.dtos.SponsorshipDetailsDto
 import com.kerugoya_bursary.form.models.SponsorshipDetails
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -11,7 +12,7 @@ interface SponsorshipDetailsService {
 
     fun getSponsorshipDetailsById(id: Long): SponsorshipDetails
 
-    fun updateSponsorshipDetails(sponsorshipDetails: SponsorshipDetails): SponsorshipDetails
+    fun updateSponsorshipDetails(id: Long, sponsorshipDetailsDto: SponsorshipDetailsDto): SponsorshipDetails
 
     fun deleteSponsorshipDetails(id: Long)
 }

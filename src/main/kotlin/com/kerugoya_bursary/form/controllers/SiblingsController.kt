@@ -1,5 +1,6 @@
 package com.kerugoya_bursary.form.controllers
 
+import com.kerugoya_bursary.form.dtos.SiblingsDto
 import com.kerugoya_bursary.form.models.Siblings
 import com.kerugoya_bursary.form.services.SiblingsService
 import org.springframework.data.domain.Page
@@ -12,9 +13,9 @@ import org.springframework.web.bind.annotation.*
 
 @RequestMapping("siblings")
 @RestController
-class SiblingsController (
+class SiblingsController(
     private val service: SiblingsService
-){
+) {
 
     @GetMapping
     fun getAllSiblings(
@@ -43,9 +44,9 @@ class SiblingsController (
     @PutMapping("{id}")
     fun updateSibling(
         @PathVariable id: Long,
-        @RequestBody siblings: Siblings
+        @RequestBody siblingsDto: SiblingsDto
     ): ResponseEntity<Siblings> {
-        return ResponseEntity.ok(service.updateSiblings(siblings))
+        return ResponseEntity.ok(service.updateSiblings(id, siblingsDto))
     }
 
     @DeleteMapping("{id}")
