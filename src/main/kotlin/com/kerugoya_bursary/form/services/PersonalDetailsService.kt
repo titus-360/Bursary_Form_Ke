@@ -12,7 +12,7 @@ interface PersonalDetailsService {
 
     fun getPersonalDetailsById(id: Long): PersonalDetails?
 
-    fun updatePersonalDetails(id : Long, personalDetailsDto: PersonalDetailsDto): PersonalDetails
+    fun updatePersonalDetails(id : Long, personalDetailsDto: PersonalDetailsDto): PersonalDetailsDto
 
     fun deletePersonalDetailsById(id: Long)
 

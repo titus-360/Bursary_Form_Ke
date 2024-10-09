@@ -45,7 +45,7 @@ class SponsorshipController(
     fun updateSponsor(
         @PathVariable id: Long,
         @RequestBody sponsorshipDetailsDto: SponsorshipDetailsDto
-    ): ResponseEntity<SponsorshipDetails> {
+    ): ResponseEntity<SponsorshipDetailsDto> {
         return ResponseEntity.ok(service.updateSponsorshipDetails(id, sponsorshipDetailsDto))
     }
 

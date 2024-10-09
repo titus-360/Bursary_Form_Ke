@@ -1,5 +1,6 @@
 package com.kerugoya_bursary.form.services.serviceImp
 
+import com.kerugoya_bursary.form.dtos.ParentDetailsDto
 import com.kerugoya_bursary.form.exception.ResourceNotFoundException
 import com.kerugoya_bursary.form.models.ParentDetails
 import com.kerugoya_bursary.form.repositories.ParentDetailsRepository
@@ -34,7 +35,26 @@ class ParentDetailsServiceImp(
             .orElseThrow { ResourceNotFoundException("Parent Details with id $id not found") }
     }
 
-    override fun updateParentDetails(parentDetails: ParentDetails): ParentDetails {
+    override fun updateParentDetails(id: Long, parentDetailsDto: ParentDetailsDto): ParentDetails {
+        val parentDetails = parentDetailsRepository.findById(id)
+            .orElseThrow { ResourceNotFoundException("Parent Details with id $id not found") }
+
+        parentDetails.apply {
+            surname = parentDetailsDto.surname
+            otherNames = parentDetailsDto.otherNames
+            idNumber = parentDetailsDto.idNumber
+            phone = parentDetailsDto.phone
+            county = parentDetailsDto.county
+            subCounty = parentDetailsDto.subCounty
+            ward = parentDetailsDto.ward
+            occupation = parentDetailsDto.occupation
+            age = parentDetailsDto.age
+            status = parentDetailsDto.status
+            relationship = parentDetailsDto.relationship
+            firstName = parentDetailsDto.firstName
+            type = parentDetailsDto.type
+
+        }
         return parentDetailsRepository.save(parentDetails)
     }
 }

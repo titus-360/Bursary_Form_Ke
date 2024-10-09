@@ -20,41 +20,41 @@ data class ParentDetails(
     var id: Long? = 0,
 
     @Column(name = "type")
-    val type: String,
+    var type: String,
 
     @Column(name = "surname")
-    val surname: String?,
+    var surname: String?,
 
     @Column(name = "first_name")
-    val firstName: String?,
+    var firstName: String?,
 
     @Column(name = "other_names")
-    val otherNames: String?,
+    var otherNames: String?,
 
     @Column(name = "id_number")
-    val idNumber: String?,
+    var idNumber: String?,
 
     @Column(name = "age")
-    val age: Int?,
+    var age: Int?,
 
     @Column(name = "phone")
-    val phone: String?,
+    var phone: String?,
 
     @Column(name = "county")
-    val county: String?,
+    var county: String?,
 
     @Column(name = "sub_county")
-    val subCounty: String?,
+    var subCounty: String?,
 
     @Column(name = "ward")
-    val ward: String?,
+    var ward: String?,
 
     @Column(name = "occupation")
-    val occupation: String?,
+    var occupation: String?,
 
     @Column(name = "status")
-    val status: String?,
+    var status: String?,
 
     @Column(name = "relationship")
-    val relationship: String?
+    var relationship: String?
 )

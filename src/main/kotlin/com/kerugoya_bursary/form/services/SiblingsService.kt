@@ -13,7 +13,7 @@ interface SiblingsService {
 
     fun getSiblingsById(id: Long): Siblings
 
-    fun updateSiblings(id : Long, siblingsDto: SiblingsDto): Siblings
+    fun updateSiblings(id : Long, siblingsDto: SiblingsDto): SiblingsDto
 
     fun deleteSiblings(id: Long)
 }
