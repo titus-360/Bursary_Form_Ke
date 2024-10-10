@@ -30,4 +30,4 @@ data class Siblings(
 
     @Column(name = "university")
     var university: Int?
-)
+) : BaseAudit()

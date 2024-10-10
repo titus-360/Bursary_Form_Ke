@@ -34,4 +34,4 @@ data class BursaryApplication(
 
     @Column(name = "declaration")
     var declaration: String
-)
+) : BaseAudit()
