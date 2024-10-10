@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <!-- Generate current time -->
+    <property name="now" value="now()" dbms="postgresql"/>
+
+    <changeSet id="create-sequence-siblings" author="denis-gitonga" dbms="postgresql">
+        <createSequence sequenceName="siblings_id_seq" schemaName="kerugoya_bursary"/>
+    </changeSet>
+
+    <changeSet id="create-table-siblings" author="denis-gitonga">
+        <createTable tableName="siblings" schemaName="kerugoya_bursary">
+            <column name="id" type="bigint"
+                    defaultValueComputed="nextval('kerugoya_bursary.siblings_id_seq')">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+
+            <column name="primary_school" type="int"/>
+            <column name="secondary_school" type="int"/>
+            <column name="tertiary_college" type="int"/>
+            <column name="university" type="int"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

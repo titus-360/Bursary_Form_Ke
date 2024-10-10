@@ -1,7 +1,7 @@
 server:
   port: 60301
-  servlet:
-    context-path: /kerugoya-bursary
+#  servlet:
+#    context-path: /kerugoya-bursary
 
 spring:
   application:
@@ -15,7 +15,14 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+        default_schema: kerugoya_bursary
+  mvc:
+    problemdetails:
+      enabled: true
+  liquibase:
+    change-log: classpath:/db/changelog/master.xml
+

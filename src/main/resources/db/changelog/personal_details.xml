@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="create-personal_details_seq" author="denis-gitonga">
+        <createSequence sequenceName="personal_details_id_seq" schemaName="kerugoya_bursary"/>
+    </changeSet>
+
+    <changeSet id="create-personal_details_table" author="denis-gitonga">
+        <createTable tableName="personal_details" schemaName="kerugoya_bursary">
+            <column name="id" type="bigint"
+                    defaultValueComputed="nextval('kerugoya_bursary.personal_details_id_seq')">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="admission_number" type="varchar(50)"/>
+            <column name="county" type="varchar2(50)"/>
+            <column name="course" type="varchar2(50)"/>
+            <column name="disability" type="boolean"/>
+            <column name="dob" type="varchar(20)"/>
+            <column name="education_financier" type="varchar2(50)"/>
+            <column name="education_level" type="varchar2(50)"/>
+            <column name="first_name" type="varchar2(50)"/>
+            <column name="gender" type="varchar2(10)"/>
+            <column name="id_number" type="varchar2(50)"/>
+            <column name="other_names" type="varchar2(50)"/>
+            <column name="phone" type="varchar2(20)"/>
+            <column name="school" type="varchar2(50)"/>
+            <column name="sub_county" type="varchar2(50)"/>
+            <column name="surname" type="varchar2(50)"/>
+            <column name="ward" type="varchar2(50)"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

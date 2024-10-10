@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="create_family_details_seq" author="denis-gitonga">
+        <createSequence sequenceName="family_details_id_seq" schemaName="kerugoya_bursary"/>
+    </changeSet>
+
+    <changeSet id="create_family_details_table" author="denis-gitonga">
+        <createTable tableName="family_details" schemaName="kerugoya_bursary">
+            <column name="id" type="bigint"
+                    defaultValueComputed="nextval('kerugoya_bursary.family_details_id_seq')">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="siblings_id" type="bigint"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
