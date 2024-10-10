@@ -1,5 +1,6 @@
 package com.kerugoya_bursary.form.controllers
 
+import com.kerugoya_bursary.form.dtos.FamilyDetailsDto
 import com.kerugoya_bursary.form.models.FamilyDetails
 import com.kerugoya_bursary.form.services.FamilyDetailsService
 import org.springframework.data.domain.Page
@@ -43,9 +44,9 @@ class FamilyDetailsController(
     @PutMapping("{id}")
     fun updateFamilyDetail(
         @PathVariable id: Long,
-        @RequestBody familyDetails: FamilyDetails
-    ): ResponseEntity<FamilyDetails> {
-        return ResponseEntity.ok(service.updateFamilyDetails(familyDetails))
+        @RequestBody familyDetailsDto: FamilyDetailsDto
+    ): ResponseEntity<FamilyDetailsDto> {
+        return ResponseEntity.ok(service.updateFamilyDetails(id, familyDetailsDto))
     }
 
     @DeleteMapping("{id}")

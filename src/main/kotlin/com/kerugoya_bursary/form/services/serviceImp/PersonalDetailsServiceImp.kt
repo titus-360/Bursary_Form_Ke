@@ -22,7 +22,7 @@ class PersonalDetailsServiceImp(
             .orElseThrow { ResourceNotFoundException("Personal Details with id $id not found") }
     }
 
-    override fun updatePersonalDetails(id: Long, personalDetailsDto: PersonalDetailsDto): PersonalDetails {
+    override fun updatePersonalDetails(id: Long, personalDetailsDto: PersonalDetailsDto): PersonalDetailsDto {
         val personalDetails = personalDetailsRepository.findById(id)
             .orElseThrow { ResourceNotFoundException("Personal Details with id $id not found") }
 
@@ -44,8 +44,25 @@ class PersonalDetailsServiceImp(
             disability = personalDetailsDto.disability
             educationFinancier = personalDetailsDto.educationFinancier
         }
-        return personalDetailsRepository.save(personalDetails)
-
+        val updatedPersonalDetails = personalDetailsRepository.save(personalDetails)
+        return PersonalDetailsDto(
+            firstName = updatedPersonalDetails.firstName,
+            surname = updatedPersonalDetails.surname,
+            otherNames = updatedPersonalDetails.otherNames,
+            idNumber = updatedPersonalDetails.idNumber,
+            gender = updatedPersonalDetails.gender,
+            dob = updatedPersonalDetails.dob,
+            phone = updatedPersonalDetails.phone,
+            county = updatedPersonalDetails.county,
+            subCounty = updatedPersonalDetails.subCounty,
+            ward = updatedPersonalDetails.ward,
+            school = updatedPersonalDetails.school,
+            educationLevel = updatedPersonalDetails.educationLevel,
+            admissionNumber = updatedPersonalDetails.admissionNumber,
+            course = updatedPersonalDetails.course,
+            disability = updatedPersonalDetails.disability,
+            educationFinancier = updatedPersonalDetails.educationFinancier
+        )
     }
 
     override fun deletePersonalDetailsById(id: Long) {

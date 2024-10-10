@@ -1,5 +1,6 @@
 package com.kerugoya_bursary.form.controllers
 
+import com.kerugoya_bursary.form.dtos.ParentDetailsDto
 import com.kerugoya_bursary.form.models.ParentDetails
 import com.kerugoya_bursary.form.services.ParentDetailsService
 import org.springframework.data.domain.Page
@@ -43,9 +44,9 @@ class ParentsDetailsController(
     @PutMapping("{id}")
     fun updateParents(
         @PathVariable id: Long,
-        @RequestBody parentDetails: ParentDetails
+        @RequestBody parentDetailsDto: ParentDetailsDto
     ): ResponseEntity<ParentDetails> {
-        return ResponseEntity.ok(service.updateParentDetails(parentDetails))
+        return ResponseEntity.ok(service.updateParentDetails(id, parentDetailsDto))
     }
 
     @DeleteMapping("{id}")

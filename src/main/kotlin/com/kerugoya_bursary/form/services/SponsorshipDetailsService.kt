@@ -12,7 +12,7 @@ interface SponsorshipDetailsService {
 
     fun getSponsorshipDetailsById(id: Long): SponsorshipDetails
 
-    fun updateSponsorshipDetails(id: Long, sponsorshipDetailsDto: SponsorshipDetailsDto): SponsorshipDetails
+    fun updateSponsorshipDetails(id: Long, sponsorshipDetailsDto: SponsorshipDetailsDto): SponsorshipDetailsDto
 
     fun deleteSponsorshipDetails(id: Long)
 }

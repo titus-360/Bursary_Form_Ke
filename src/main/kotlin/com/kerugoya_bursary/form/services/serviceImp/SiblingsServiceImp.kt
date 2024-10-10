@@ -27,7 +27,7 @@ class SiblingsServiceImp(
         }
     }
 
-    override fun updateSiblings(id: Long, siblingsDto: SiblingsDto): Siblings {
+    override fun updateSiblings(id: Long, siblingsDto: SiblingsDto): SiblingsDto {
         val existingSiblings = siblingsRepository.findById(id).orElseThrow {
             throw ResourceNotFoundException("Siblings with id $id not found")
         }
@@ -36,7 +36,13 @@ class SiblingsServiceImp(
         existingSiblings.university = siblingsDto.university
         existingSiblings.tertiaryCollege = siblingsDto.tertiaryCollege
 
-        return siblingsRepository.save(existingSiblings)
+        val updatedSiblings = siblingsRepository.save(existingSiblings)
+        return SiblingsDto(
+            primarySchool = updatedSiblings.primarySchool ?: 0,
+            secondarySchool = updatedSiblings.secondarySchool ?: 0,
+            university = updatedSiblings.university ?: 0,
+            tertiaryCollege = updatedSiblings.tertiaryCollege ?: 0
+        )
     }
 
     override fun deleteSiblings(id: Long) {

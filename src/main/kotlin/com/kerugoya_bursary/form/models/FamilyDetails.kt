@@ -22,9 +22,9 @@ data class FamilyDetails(
 
     @OneToMany(cascade = [CascadeType.ALL])
     @JoinColumn(name = "family_details_id")
-    val parents: List<ParentDetails>?,
+    var parents: List<ParentDetails>?,
 
     @OneToOne(cascade = [CascadeType.ALL])
     @JoinColumn(name = "siblings_id")
-    val siblings: Siblings?
+    var siblings: Siblings?
 )

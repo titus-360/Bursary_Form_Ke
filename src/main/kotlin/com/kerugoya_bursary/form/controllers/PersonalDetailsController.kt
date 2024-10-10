@@ -44,7 +44,7 @@ class PersonalDetailsController(
     fun updatePersonalDetail(
         @PathVariable id: Long,
         @RequestBody personalDetailsDto: PersonalDetailsDto
-    ): ResponseEntity<PersonalDetails> {
+    ): ResponseEntity<PersonalDetailsDto> {
         return ResponseEntity.ok(service.updatePersonalDetails(id, personalDetailsDto))
     }
 

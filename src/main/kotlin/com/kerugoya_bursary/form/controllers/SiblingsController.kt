@@ -45,7 +45,7 @@ class SiblingsController(
     fun updateSibling(
         @PathVariable id: Long,
         @RequestBody siblingsDto: SiblingsDto
-    ): ResponseEntity<Siblings> {
+    ): ResponseEntity<SiblingsDto> {
         return ResponseEntity.ok(service.updateSiblings(id, siblingsDto))
     }
 
