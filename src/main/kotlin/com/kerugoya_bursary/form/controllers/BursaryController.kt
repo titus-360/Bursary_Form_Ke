@@ -36,8 +36,8 @@ class BursaryController(
 
     @PostMapping
     fun createBursary(
-        @RequestBody bursaryApplication: BursaryApplication
-    ): ResponseEntity<BursaryApplication> {
+        @RequestBody bursaryApplication: BursaryApplicationDto
+    ): ResponseEntity<BursaryApplicationDto> {
         return ResponseEntity.ok(service.createBursaryApplication(bursaryApplication))
     }
 

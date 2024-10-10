@@ -2,6 +2,7 @@ package com.kerugoya_bursary.form.services.serviceImp
 
 import com.kerugoya_bursary.form.dtos.BursaryApplicationDto
 import com.kerugoya_bursary.form.mappers.BursaryApplicationMapper.toDto
+import com.kerugoya_bursary.form.mappers.BursaryApplicationMapper.toEntity
 import com.kerugoya_bursary.form.mappers.FamilyDetailsMapper.toEntity
 import com.kerugoya_bursary.form.mappers.PersonalDetailsMapper.toEntity
 import com.kerugoya_bursary.form.mappers.SponsorShipDetailsMapper.toEntity
@@ -20,8 +21,9 @@ class BursaryServiceImpl(
         return repository.findAll(pageable)
     }
 
-    override fun createBursaryApplication(bursaryApplication: BursaryApplication): BursaryApplication {
-        return repository.save(bursaryApplication)
+    override fun createBursaryApplication(bursaryApplicationDto: BursaryApplicationDto): BursaryApplicationDto {
+        val bursaryApplication = bursaryApplicationDto.toEntity()
+        return repository.save(bursaryApplication).toDto()
     }
 
     override fun getBursaryApplicationById(id: Long): BursaryApplication {
@@ -35,6 +37,7 @@ class BursaryServiceImpl(
             throw IllegalArgumentException("Bursary Application with id ${bursaryApplicationDto.id} not found")
         }
         existingBursaryApplication.apply {
+            id = bursaryApplicationDto.id
             personalDetails = bursaryApplicationDto.personalDetails.toEntity()
             familyDetails = bursaryApplicationDto.familyDetails.toEntity()
             sponsorshipDetails = bursaryApplicationDto.sponsorshipDetails.toEntity()

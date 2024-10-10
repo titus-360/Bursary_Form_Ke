@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable
 interface BursaryService {
     fun getAllBursaryApplications(pageable: Pageable): Page<BursaryApplication>
 
-    fun createBursaryApplication(bursaryApplication: BursaryApplication): BursaryApplication
+    fun createBursaryApplication(bursaryApplicationDto: BursaryApplicationDto): BursaryApplicationDto
 
     fun getBursaryApplicationById(id: Long): BursaryApplication
 

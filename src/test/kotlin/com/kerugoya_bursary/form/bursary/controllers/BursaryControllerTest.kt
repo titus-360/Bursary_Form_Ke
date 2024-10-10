@@ -72,11 +72,12 @@ class BursaryControllerTest {
     @Test
     fun `create bursary application - success`() {
         `when`(bursaryService.createBursaryApplication(anyOrNull()))
-            .thenReturn(createBursaryApplication())
+            .thenReturn(createBursaryApplicationDto())
 
-        val response: ResponseEntity<BursaryApplication> = bursaryController.createBursary(createBursaryApplication())
+        val response: ResponseEntity<BursaryApplicationDto> =
+            bursaryController.createBursary(createBursaryApplicationDto())
 
-        assertEquals(createBursaryApplication(), response.body)
+        assertEquals(createBursaryApplicationDto(), response.body)
         assertEquals(200, response.statusCode.value())
     }
 

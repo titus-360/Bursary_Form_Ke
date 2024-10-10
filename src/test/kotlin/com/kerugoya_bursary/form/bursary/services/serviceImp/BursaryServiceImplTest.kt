@@ -49,13 +49,14 @@ class BursaryServiceImplTest {
     @Test
     @DisplayName("Should create a new bursary application")
     fun createBursaryApplication() {
-        val bursaryApplication = createTestBursaryApplication()
+        val bursaryApplicationDto = createTestBursaryApplicationDto()
+        val bursaryApplicationEntity = bursaryApplicationDto.toEntity()
 
-        `when`(repository.save(bursaryApplication)).thenReturn(bursaryApplication)
+        `when`(repository.save(bursaryApplicationEntity)).thenReturn(bursaryApplicationEntity)
 
-        val result = service.createBursaryApplication(bursaryApplication)
+        val result = service.createBursaryApplication(bursaryApplicationDto)
 
-        assertEquals(bursaryApplication, result)
+        assertEquals(bursaryApplicationDto, result)
     }
 
     @Test
@@ -89,6 +90,7 @@ class BursaryServiceImplTest {
         val bursaryApplicationDto = createTestBursaryApplicationDto()
         val bursaryApplication = bursaryApplicationDto.toEntity()
 
+        `when`(repository.findById(bursaryApplicationDto.id)).thenReturn(Optional.of(bursaryApplication))
         `when`(repository.save(bursaryApplication)).thenReturn(bursaryApplication)
 
         val result = service.updateBursaryApplication(bursaryApplicationDto)
