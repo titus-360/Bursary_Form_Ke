@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable
 interface SponsorshipDetailsService {
     fun getAllSponsorshipDetails(pageable: Pageable): Page<SponsorshipDetails>
 
-    fun createSponsorshipDetails(sponsorshipDetails: SponsorshipDetails): SponsorshipDetails
+    fun createSponsorshipDetails(sponsorshipDetailsDto: SponsorshipDetailsDto): SponsorshipDetailsDto
 
     fun getSponsorshipDetailsById(id: Long): SponsorshipDetails
 

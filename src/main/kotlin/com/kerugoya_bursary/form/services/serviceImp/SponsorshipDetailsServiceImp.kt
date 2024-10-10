@@ -21,8 +21,20 @@ class SponsorshipDetailsServiceImp(
         return sponsorShipDetailsRepository.findAll(pageable)
     }
 
-    override fun createSponsorshipDetails(sponsorshipDetails: SponsorshipDetails): SponsorshipDetails {
-        return sponsorShipDetailsRepository.save(sponsorshipDetails)
+    override fun createSponsorshipDetails(sponsorshipDetailsDto: SponsorshipDetailsDto): SponsorshipDetailsDto {
+        val sponsorshipDetails = SponsorshipDetails(
+            feesRequired = sponsorshipDetailsDto.feesRequired,
+            bursaryReceived = sponsorshipDetailsDto.bursaryReceived,
+            feesBalance = sponsorshipDetailsDto.feesBalance
+        )
+        val savedSponsorshipDetails = sponsorShipDetailsRepository.save(sponsorshipDetails)
+        return SponsorshipDetailsDto(
+            id = savedSponsorshipDetails.id,
+            feesRequired = savedSponsorshipDetails.feesRequired ?: BigDecimal.ZERO,
+            bursaryReceived = savedSponsorshipDetails.bursaryReceived ?: BigDecimal.ZERO,
+            feesBalance = savedSponsorshipDetails.feesBalance ?: BigDecimal.ZERO
+        )
+
     }
 
     override fun getSponsorshipDetailsById(id: Long): SponsorshipDetails {

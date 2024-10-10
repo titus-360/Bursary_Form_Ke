@@ -57,4 +57,4 @@ data class ParentDetails(
 
     @Column(name = "relationship")
     var relationship: String?
-)
+) : BaseAudit()

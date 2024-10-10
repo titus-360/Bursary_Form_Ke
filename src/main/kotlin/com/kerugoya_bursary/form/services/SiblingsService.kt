@@ -9,7 +9,7 @@ interface SiblingsService {
 
     fun getAllSiblings(pageable: Pageable): Page<Siblings>
 
-    fun createSiblings(siblings: Siblings): Siblings
+    fun createSiblings(siblingsDto: SiblingsDto): SiblingsDto
 
     fun getSiblingsById(id: Long): Siblings
 

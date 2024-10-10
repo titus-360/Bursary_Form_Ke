@@ -31,8 +31,8 @@ class SiblingsController(
 
     @PostMapping
     fun createSibling(
-        @RequestBody siblings: Siblings
-    ): ResponseEntity<Siblings> {
+        @RequestBody siblings: SiblingsDto
+    ): ResponseEntity<SiblingsDto> {
         return ResponseEntity.ok(service.createSiblings(siblings))
     }
 

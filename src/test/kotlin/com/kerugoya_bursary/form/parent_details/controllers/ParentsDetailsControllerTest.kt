@@ -1,9 +1,13 @@
 package com.kerugoya_bursary.form.parent_details.controllers
 
 import com.kerugoya_bursary.form.controllers.ParentsDetailsController
+import com.kerugoya_bursary.form.dtos.ParentDetailsDto
+import com.kerugoya_bursary.form.mappers.FamilyDetailsMapper.toDto
+import com.kerugoya_bursary.form.mappers.FamilyDetailsMapper.toEntity
 import com.kerugoya_bursary.form.models.ParentDetails
 import com.kerugoya_bursary.form.services.ParentDetailsService
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertDoesNotThrow
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.mockito.Mock
@@ -15,7 +19,7 @@ import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.PageRequest
 import kotlin.test.Test
 
-class ParentsDetailsControllerTest{
+class ParentsDetailsControllerTest {
     @Mock
     private lateinit var service: ParentDetailsService
 
@@ -45,13 +49,14 @@ class ParentsDetailsControllerTest{
     @Test
     @DisplayName("Should create a new parent detail")
     fun createParentDetail() {
-        val parentDetails = createTestParentDetails()
+        val parentDetailsDto = createTestParentDetailsDto()
+        val parentDetails = parentDetailsDto.toEntity()
 
-        `when`(service.createParentDetails(parentDetails)).thenReturn(parentDetails)
+        `when`(service.createParentDetails(parentDetailsDto)).thenReturn(parentDetailsDto)
 
-        val result = controller.createParent(parentDetails)
+        val result = controller.createParent(parentDetailsDto)
 
-        assertEquals(parentDetails, result.body)
+        assertEquals(parentDetailsDto, result.body)
     }
 
     @Test
@@ -71,13 +76,28 @@ class ParentsDetailsControllerTest{
     @DisplayName("Should update a parent detail")
     fun updateParentDetail() {
         val parentDetails = createTestParentDetails()
+        val parentDetailsDto = ParentDetailsDto(
+            id = parentDetails.id,
+            idNumber = parentDetails.idNumber,
+            phone = parentDetails.phone,
+            occupation = parentDetails.occupation,
+            relationship = parentDetails.relationship,
+            age = parentDetails.age,
+            county = parentDetails.county,
+            subCounty = parentDetails.subCounty,
+            ward = parentDetails.ward,
+            firstName = parentDetails.firstName,
+            surname = parentDetails.surname,
+            otherNames = parentDetails.otherNames,
+            status = parentDetails.status,
+            type = parentDetails.type
+        )
         val id = 1L
 
-        `when`(service.updateParentDetails(parentDetails)).thenReturn(parentDetails)
+        `when`(service.updateParentDetails(id, parentDetailsDto)).thenReturn(parentDetails)
+        val result = controller.updateParents(id, parentDetailsDto)
 
-        val result = controller.updateParents(id, parentDetails)
-
-        assertEquals(parentDetails, result.body)
+        assertEquals(parentDetailsDto, result.body?.toDto())
     }
 
     @Test
@@ -93,6 +113,25 @@ class ParentsDetailsControllerTest{
 
 private fun createTestParentDetails(): ParentDetails {
     return ParentDetails(
+        id = 1,
+        idNumber = "12345678",
+        phone = "0712345678",
+        occupation = "farmer",
+        relationship = "mother",
+        age = 50,
+        county = "Kirinyaga",
+        subCounty = "Kirinyaga Central",
+        ward = "Kerugoya",
+        firstName = "Jane",
+        surname = "Doe",
+        otherNames = "Doe",
+        status = "married",
+        type = "guardian",
+    )
+}
+
+private fun createTestParentDetailsDto(): ParentDetailsDto {
+    return ParentDetailsDto(
         id = 1,
         idNumber = "12345678",
         phone = "0712345678",

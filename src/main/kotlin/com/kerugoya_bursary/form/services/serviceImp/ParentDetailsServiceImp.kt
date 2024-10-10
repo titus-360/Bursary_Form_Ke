@@ -2,6 +2,8 @@ package com.kerugoya_bursary.form.services.serviceImp
 
 import com.kerugoya_bursary.form.dtos.ParentDetailsDto
 import com.kerugoya_bursary.form.exception.ResourceNotFoundException
+import com.kerugoya_bursary.form.mappers.FamilyDetailsMapper.toDto
+import com.kerugoya_bursary.form.mappers.FamilyDetailsMapper.toEntity
 import com.kerugoya_bursary.form.models.ParentDetails
 import com.kerugoya_bursary.form.repositories.ParentDetailsRepository
 import com.kerugoya_bursary.form.services.ParentDetailsService
@@ -26,8 +28,10 @@ class ParentDetailsServiceImp(
         }
     }
 
-    override fun createParentDetails(parentDetails: ParentDetails): ParentDetails {
-        return parentDetailsRepository.save(parentDetails)
+    override fun createParentDetails(parentDetailsDto: ParentDetailsDto): ParentDetailsDto {
+        val parentDetails = parentDetailsDto.toEntity()
+        val savedParentDetails = parentDetailsRepository.save(parentDetails)
+        return savedParentDetails.toDto()
     }
 
     override fun getParentDetailsById(id: Long): ParentDetails {

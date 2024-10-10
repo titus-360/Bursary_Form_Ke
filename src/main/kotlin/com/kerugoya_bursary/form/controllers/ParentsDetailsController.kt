@@ -31,8 +31,8 @@ class ParentsDetailsController(
 
     @PostMapping
     fun createParent(
-        @RequestBody parentDetails: ParentDetails
-    ): ResponseEntity<ParentDetails> {
+        @RequestBody parentDetails: ParentDetailsDto
+    ): ResponseEntity<ParentDetailsDto> {
         return ResponseEntity.ok(service.createParentDetails(parentDetails))
     }
 

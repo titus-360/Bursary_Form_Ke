@@ -9,11 +9,11 @@ interface ParentDetailsService {
 
     fun getAllParentDetails(pageable: Pageable): Page<ParentDetails>
 
-    fun createParentDetails(parentDetails: ParentDetails): ParentDetails
+    fun createParentDetails(parentDetailsDto: ParentDetailsDto): ParentDetailsDto
 
     fun getParentDetailsById(id: Long): ParentDetails
 
-    fun updateParentDetails(id : Long, parentDetailsDto: ParentDetailsDto): ParentDetails
+    fun updateParentDetails(id: Long, parentDetailsDto: ParentDetailsDto): ParentDetails
 
     fun deleteParentDetails(id: Long)
 }

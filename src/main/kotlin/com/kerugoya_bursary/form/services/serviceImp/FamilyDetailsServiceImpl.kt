@@ -25,8 +25,17 @@ class FamilyDetailsServiceImpl(
         }
     }
 
-    override fun createFamilyDetails(familyDetails: FamilyDetails): FamilyDetails {
-        return familyDetailsRepository.save(familyDetails)
+    override fun createFamilyDetails(familyDetailsDto: FamilyDetailsDto): FamilyDetailsDto {
+        val familyDetails = FamilyDetails(
+            parents = familyDetailsDto.parents?.map { it.toEntity() },
+            siblings = familyDetailsDto.siblings?.toEntity()
+        )
+        val savedFamilyDetails = familyDetailsRepository.save(familyDetails)
+        return FamilyDetailsDto(
+            id = savedFamilyDetails.id,
+            parents = savedFamilyDetails.parents?.map { it.toDto() },
+            siblings = savedFamilyDetails.siblings?.toDto()
+        )
     }
 
     override fun updateFamilyDetails(id: Long, familyDetailsDto: FamilyDetailsDto): FamilyDetailsDto {
@@ -41,6 +50,7 @@ class FamilyDetailsServiceImpl(
 
         val savedFamilyDetails = familyDetailsRepository.save(updatedFamilyDetails)
         return FamilyDetailsDto(
+            id = savedFamilyDetails.id,
             parents = savedFamilyDetails.parents?.map { it.toDto() },
             siblings = savedFamilyDetails.siblings?.toDto()
         )

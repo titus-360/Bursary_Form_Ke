@@ -67,4 +67,4 @@ data class PersonalDetails(
 
     @Column(name = "education_financier")
     var educationFinancier: String
-)
+) : BaseAudit()

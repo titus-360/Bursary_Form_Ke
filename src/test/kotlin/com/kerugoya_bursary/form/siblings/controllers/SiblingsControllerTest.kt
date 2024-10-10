@@ -3,6 +3,8 @@ package com.kerugoya_bursary.form.siblings.controllers
 import com.kerugoya_bursary.form.controllers.SiblingsController
 import com.kerugoya_bursary.form.dtos.SiblingsDto
 import com.kerugoya_bursary.form.exception.ResourceNotFoundException
+import com.kerugoya_bursary.form.mappers.FamilyDetailsMapper.toDto
+import com.kerugoya_bursary.form.mappers.SiblingsDetailsMapper.toEntity
 import com.kerugoya_bursary.form.models.Siblings
 import com.kerugoya_bursary.form.services.SiblingsService
 import org.junit.jupiter.api.Assertions.*
@@ -19,7 +21,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import kotlin.test.Test
 
-class SiblingsControllerTest{
+class SiblingsControllerTest {
 
     @Mock
     private lateinit var service: SiblingsService
@@ -50,13 +52,14 @@ class SiblingsControllerTest{
     @Test
     @DisplayName("Should create a new sibling detail")
     fun createSiblingDetail() {
-        val siblings = createTestSibling()
+        val siblingsDto = createTestSiblingDto()
+        val siblings = siblingsDto.toEntity()
 
-        `when`(service.createSiblings(siblings)).thenReturn(siblings)
+        `when`(service.createSiblings(siblingsDto)).thenReturn(siblingsDto)
 
-        val result = controller.createSibling(siblings)
+        val result = controller.createSibling(siblingsDto)
 
-        assertEquals(siblings, result.body)
+        assertEquals(siblingsDto, result.body)
     }
 
     @Test
@@ -79,12 +82,11 @@ class SiblingsControllerTest{
         val siblings = createTestSibling()
         val siblingsDto = createTestSiblingDto()
 
-        `when`(service.updateSiblings(id, siblingsDto)).thenReturn(siblings)
-
-        val result: ResponseEntity<Siblings> = controller.updateSibling(id, siblingsDto)
+        `when`(service.updateSiblings(id, siblingsDto)).thenReturn(siblingsDto)
+        val result: ResponseEntity<SiblingsDto> = controller.updateSibling(id, siblingsDto)
 
         assertEquals(HttpStatus.OK, result.statusCode)
-        assertEquals(siblings, result.body)
+        assertEquals(siblings.toDto(), result.body)
     }
 
     @Test
@@ -110,6 +112,7 @@ class SiblingsControllerTest{
         assertDoesNotThrow { controller.deleteSiblingById(id) }
     }
 }
+
 private fun createTestSibling(): Siblings {
     return Siblings(
         id = 1,
@@ -123,6 +126,7 @@ private fun createTestSibling(): Siblings {
 
 private fun createTestSiblingDto(): SiblingsDto {
     return SiblingsDto(
+        id = 1,
         primarySchool = 1,
         secondarySchool = 1,
         university = 1,

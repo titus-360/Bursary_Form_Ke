@@ -2,6 +2,7 @@ package com.kerugoya_bursary.form.siblings.services.serviceImp
 
 import com.kerugoya_bursary.form.dtos.SiblingsDto
 import com.kerugoya_bursary.form.exception.ResourceNotFoundException
+import com.kerugoya_bursary.form.mappers.SiblingsDetailsMapper.toEntity
 import com.kerugoya_bursary.form.models.Siblings
 import com.kerugoya_bursary.form.repositories.SiblingsRepository
 import com.kerugoya_bursary.form.services.serviceImp.SiblingsServiceImp
@@ -18,7 +19,7 @@ import org.springframework.data.domain.PageRequest
 import java.util.*
 import kotlin.test.Test
 
-class SiblingsServiceImpTest{
+class SiblingsServiceImpTest {
 
     @Mock
     private lateinit var repository: SiblingsRepository
@@ -49,13 +50,14 @@ class SiblingsServiceImpTest{
     @Test
     @DisplayName("Should create a new sibling detail")
     fun createSiblings() {
-        val siblings = createTestSibling()
+        val siblingsDto = createTestSiblingDto()
+        val siblings = siblingsDto.toEntity()
 
         `when`(repository.save(siblings)).thenReturn(siblings)
 
-        val result = service.createSiblings(siblings)
+        val result = service.createSiblings(siblingsDto)
 
-        assertEquals(siblings, result)
+        assertEquals(siblingsDto, result)
     }
 
     @Test
