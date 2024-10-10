@@ -20,7 +20,7 @@ import org.springframework.http.ResponseEntity
 import java.math.BigDecimal
 import kotlin.test.Test
 
-class SponsorshipControllerTest{
+class SponsorshipControllerTest {
     @Mock
     private lateinit var service: SponsorshipDetailsService
 
@@ -36,7 +36,7 @@ class SponsorshipControllerTest{
     @DisplayName("Should return all sponsorship details")
     fun getAllSponsorshipDetails() {
         val pageable = PageRequest.of(0, 10)
-        val sponsorshipDetails =  createTestSponsorshipDetails()
+        val sponsorshipDetails = createTestSponsorshipDetails()
         val page: Page<SponsorshipDetails> = PageImpl(listOf(sponsorshipDetails))
 
         `when`(service.getAllSponsorshipDetails(pageable)).thenReturn(page)
@@ -47,22 +47,30 @@ class SponsorshipControllerTest{
         assertEquals(sponsorshipDetails, result.body?.content?.get(0))
     }
 
+    private fun SponsorshipDetails.toDto(): SponsorshipDetailsDto {
+        return SponsorshipDetailsDto(
+            feesRequired = this.feesRequired ?: BigDecimal.ZERO,
+            feesBalance = this.feesBalance ?: BigDecimal.ZERO,
+            bursaryReceived = this.bursaryReceived ?: BigDecimal.ZERO
+        )
+    }
+
     @Test
     @DisplayName("Should create a new sponsorship detail")
     fun createSponsorshipDetail() {
-        val sponsorshipDetails =  createTestSponsorshipDetails()
+        val sponsorshipDetails = createTestSponsorshipDetails()
 
-        `when`(service.createSponsorshipDetails(sponsorshipDetails)).thenReturn(sponsorshipDetails)
+        `when`(service.createSponsorshipDetails(sponsorshipDetails.toDto())).thenReturn(sponsorshipDetails.toDto())
 
-        val result = controller.createSponsor(sponsorshipDetails)
+        val result = controller.createSponsor(sponsorshipDetails.toDto())
 
-        assertEquals(sponsorshipDetails, result.body)
+        assertEquals(sponsorshipDetails.toDto(), result.body)
     }
 
     @Test
     @DisplayName("Should return a sponsorship detail by id")
     fun getSponsorshipDetailById() {
-        val sponsorshipDetails =  createTestSponsorshipDetails()
+        val sponsorshipDetails = createTestSponsorshipDetails()
         val id = 1L
 
         `when`(service.getSponsorshipDetailsById(id)).thenReturn(sponsorshipDetails)
@@ -79,12 +87,12 @@ class SponsorshipControllerTest{
         val sponsorshipDetails = createTestSponsorshipDetails()
         val sponsorshipDetailsDto = createTestSponsorshipDetailsDto()
 
-        `when`(service.updateSponsorshipDetails(id, sponsorshipDetailsDto)).thenReturn(sponsorshipDetails)
+        `when`(service.updateSponsorshipDetails(id, sponsorshipDetailsDto)).thenReturn(sponsorshipDetailsDto)
 
-        val result: ResponseEntity<SponsorshipDetails> = controller.updateSponsor(id, sponsorshipDetailsDto)
+        val result: ResponseEntity<SponsorshipDetailsDto> = controller.updateSponsor(id, sponsorshipDetailsDto)
 
         assertEquals(HttpStatus.OK, result.statusCode)
-        assertEquals(sponsorshipDetails, result.body)
+        assertEquals(sponsorshipDetailsDto, result.body)
     }
 
     @Test
@@ -93,7 +101,12 @@ class SponsorshipControllerTest{
         val id = 1L
         val sponsorshipDetailsDto = createTestSponsorshipDetailsDto()
 
-        `when`(service.updateSponsorshipDetails(id, sponsorshipDetailsDto)).thenThrow(ResourceNotFoundException::class.java)
+        `when`(
+            service.updateSponsorshipDetails(
+                id,
+                sponsorshipDetailsDto
+            )
+        ).thenThrow(ResourceNotFoundException::class.java)
 
         assertThrows(ResourceNotFoundException::class.java) {
             controller.updateSponsor(id, sponsorshipDetailsDto)
@@ -125,6 +138,6 @@ private fun createTestSponsorshipDetailsDto(): SponsorshipDetailsDto {
     return SponsorshipDetailsDto(
         feesRequired = BigDecimal.valueOf(20000),
         feesBalance = BigDecimal.valueOf(3000),
-        bursaryreceived = BigDecimal.valueOf(10000)
+        bursaryReceived = BigDecimal.valueOf(10000)
     )
 }

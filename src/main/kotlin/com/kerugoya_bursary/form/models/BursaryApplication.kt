@@ -18,20 +18,20 @@ data class BursaryApplication(
         allocationSize = 1
     )
     @Column(name = "id")
-    var id: Long? = 0,
+    var id: Long = 0,
 
     @OneToOne(cascade = [CascadeType.ALL])
     @JoinColumn(name = "personal_details_id")
-    val personalDetails: PersonalDetails,
+    var personalDetails: PersonalDetails,
 
     @OneToOne(cascade = [CascadeType.ALL])
     @JoinColumn(name = "family_details_id")
-    val familyDetails: FamilyDetails,
+    var familyDetails: FamilyDetails,
 
     @OneToOne(cascade = [CascadeType.ALL])
     @JoinColumn(name = "sponsorship_details_id")
-    val sponsorshipDetails: SponsorshipDetails,
+    var sponsorshipDetails: SponsorshipDetails,
 
     @Column(name = "declaration")
-    val declaration: String
+    var declaration: String
 )

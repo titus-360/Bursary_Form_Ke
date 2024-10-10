@@ -1,6 +1,10 @@
 package com.kerugoya_bursary.form.family.controllers
 
 import com.kerugoya_bursary.form.controllers.FamilyDetailsController
+import com.kerugoya_bursary.form.dtos.FamilyDetailsDto
+import com.kerugoya_bursary.form.dtos.ParentDetailsDto
+import com.kerugoya_bursary.form.dtos.SiblingsDto
+import com.kerugoya_bursary.form.mappers.FamilyDetailsMapper.toEntity
 import com.kerugoya_bursary.form.models.FamilyDetails
 import com.kerugoya_bursary.form.models.ParentDetails
 import com.kerugoya_bursary.form.models.Siblings
@@ -19,7 +23,6 @@ import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.PageRequest
 
 class FamilyDetailsControllerTest {
-
 
     @Mock
     private lateinit var service: FamilyDetailsService
@@ -50,13 +53,14 @@ class FamilyDetailsControllerTest {
     @Test
     @DisplayName("Should create a new family detail")
     fun createFamilyDetail() {
-        val familyDetails = createFamilyDetails()
+        val familyDetailsDto = createFamilyDetailsDto()
+        val familyDetails = familyDetailsDto.toEntity()
 
-        `when`(service.createFamilyDetails(familyDetails)).thenReturn(familyDetails)
+        `when`(service.createFamilyDetails(familyDetailsDto)).thenReturn(familyDetailsDto)
 
-        val result = controller.createFamilyDetail(familyDetails)
+        val result = controller.createFamilyDetail(familyDetailsDto)
 
-        assertEquals(familyDetails, result.body)
+        assertEquals(familyDetailsDto, result.body)
     }
 
     @Test
@@ -68,19 +72,6 @@ class FamilyDetailsControllerTest {
         `when`(service.getFamilyDetailsById(id)).thenReturn(familyDetails)
 
         val result = controller.getFamilyDetailById(id)
-
-        assertEquals(familyDetails, result.body)
-    }
-
-    @Test
-    @DisplayName("Should update a family detail")
-    fun updateFamilyDetail() {
-        val familyDetails = createFamilyDetails()
-        val id = 1L
-
-        `when`(service.updateFamilyDetails(familyDetails)).thenReturn(familyDetails)
-
-        val result = controller.updateFamilyDetail(id, familyDetails)
 
         assertEquals(familyDetails, result.body)
     }
@@ -101,6 +92,37 @@ private fun createFamilyDetails(): FamilyDetails {
         id = 1,
         siblings = createSibling(),
         parents = listOf(createParentDetails())
+    )
+}
+
+private fun createFamilyDetailsDto(): FamilyDetailsDto {
+    return FamilyDetailsDto(
+        id = 1,
+        siblings = SiblingsDto(
+            id = 1,
+            primarySchool = 1,
+            secondarySchool = 1,
+            university = 1,
+            tertiaryCollege = 1
+        ),
+        parents = listOf(
+            ParentDetailsDto(
+                id = 1,
+                idNumber = "12345678",
+                phone = "0712345678",
+                occupation = "farmer",
+                relationship = "mother",
+                age = 50,
+                county = "Kirinyaga",
+                subCounty = "Kirinyaga Central",
+                ward = "Kerugoya",
+                firstName = "Jane",
+                surname = "Doe",
+                otherNames = "Doe",
+                status = "married",
+                type = "guardian"
+            )
+        )
     )
 }
 

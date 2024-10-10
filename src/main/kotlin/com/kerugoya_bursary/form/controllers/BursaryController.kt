@@ -1,5 +1,6 @@
 package com.kerugoya_bursary.form.controllers
 
+import com.kerugoya_bursary.form.dtos.BursaryApplicationDto
 import com.kerugoya_bursary.form.models.BursaryApplication
 import com.kerugoya_bursary.form.services.BursaryService
 import org.springframework.data.domain.Page
@@ -24,8 +25,7 @@ class BursaryController(
             sort = ["id"],
             direction = Sort.Direction.DESC
         ) pageable: Pageable
-    ): ResponseEntity<Page<BursaryApplication>>
-    {
+    ): ResponseEntity<Page<BursaryApplication>> {
         return ResponseEntity.ok(service.getAllBursaryApplications(pageable))
     }
 
@@ -44,8 +44,8 @@ class BursaryController(
     @PutMapping("{id}")
     fun updateBursary(
         @PathVariable id: Long,
-        @RequestBody bursaryApplication: BursaryApplication
-    ): ResponseEntity<BursaryApplication> {
+        @RequestBody bursaryApplication: BursaryApplicationDto
+    ): ResponseEntity<BursaryApplicationDto> {
         return ResponseEntity.ok(service.updateBursaryApplication(bursaryApplication))
     }
 

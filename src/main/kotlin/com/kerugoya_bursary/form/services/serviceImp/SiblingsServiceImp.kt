@@ -2,6 +2,8 @@ package com.kerugoya_bursary.form.services.serviceImp
 
 import com.kerugoya_bursary.form.dtos.SiblingsDto
 import com.kerugoya_bursary.form.exception.ResourceNotFoundException
+import com.kerugoya_bursary.form.mappers.FamilyDetailsMapper.toDto
+import com.kerugoya_bursary.form.mappers.SiblingsDetailsMapper.toEntity
 import com.kerugoya_bursary.form.models.Siblings
 import com.kerugoya_bursary.form.repositories.SiblingsRepository
 import com.kerugoya_bursary.form.services.SiblingsService
@@ -17,8 +19,10 @@ class SiblingsServiceImp(
         return siblingsRepository.findAll(pageable)
     }
 
-    override fun createSiblings(siblings: Siblings): Siblings {
-        return siblingsRepository.save(siblings)
+    override fun createSiblings(siblingsDto: SiblingsDto): SiblingsDto {
+        val siblings = siblingsDto.toEntity()
+        val savedSiblings = siblingsRepository.save(siblings)
+        return savedSiblings.toDto()
     }
 
     override fun getSiblingsById(id: Long): Siblings {
@@ -38,6 +42,7 @@ class SiblingsServiceImp(
 
         val updatedSiblings = siblingsRepository.save(existingSiblings)
         return SiblingsDto(
+            id = updatedSiblings.id,
             primarySchool = updatedSiblings.primarySchool ?: 0,
             secondarySchool = updatedSiblings.secondarySchool ?: 0,
             university = updatedSiblings.university ?: 0,

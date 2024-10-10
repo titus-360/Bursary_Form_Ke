@@ -1,6 +1,9 @@
 package com.kerugoya_bursary.form.parent_details.services.serviceImp
 
+import com.kerugoya_bursary.form.dtos.ParentDetailsDto
 import com.kerugoya_bursary.form.exception.ResourceNotFoundException
+import com.kerugoya_bursary.form.mappers.FamilyDetailsMapper.toDto
+import com.kerugoya_bursary.form.mappers.FamilyDetailsMapper.toEntity
 import com.kerugoya_bursary.form.models.ParentDetails
 import com.kerugoya_bursary.form.repositories.ParentDetailsRepository
 import com.kerugoya_bursary.form.services.serviceImp.ParentDetailsServiceImp
@@ -47,13 +50,14 @@ class ParentDetailsServiceImpTest {
     @Test
     @DisplayName("Should create a new parent detail")
     fun createParentDetails() {
-        val parentDetails = createTestParentDetails()
+        val parentDetailsDto = createTestParentDetailsDto()
+        val parentDetails = parentDetailsDto.toEntity()
 
         `when`(repository.save(parentDetails)).thenReturn(parentDetails)
 
-        val result = service.createParentDetails(parentDetails)
+        val result = service.createParentDetails(parentDetails.toDto())
 
-        assertEquals(parentDetails, result)
+        assertEquals(parentDetailsDto, result)
     }
 
     @Test
@@ -85,12 +89,30 @@ class ParentDetailsServiceImpTest {
     @DisplayName("Should update a parent detail")
     fun updateParentDetails() {
         val parentDetails = createTestParentDetails()
+        val parentDetailsDto = ParentDetailsDto(
+            id = parentDetails.id,
+            idNumber = parentDetails.idNumber,
+            phone = parentDetails.phone,
+            occupation = parentDetails.occupation,
+            relationship = parentDetails.relationship,
+            age = parentDetails.age,
+            county = parentDetails.county,
+            subCounty = parentDetails.subCounty,
+            ward = parentDetails.ward,
+            firstName = parentDetails.firstName,
+            surname = parentDetails.surname,
+            otherNames = parentDetails.otherNames,
+            status = parentDetails.status,
+            type = parentDetails.type
+        )
+        val id = 1L
 
+        `when`(repository.findById(id)).thenReturn(Optional.of(parentDetails))
         `when`(repository.save(parentDetails)).thenReturn(parentDetails)
 
-        val result = service.updateParentDetails(parentDetails)
+        val result = service.updateParentDetails(id, parentDetailsDto)
 
-        assertEquals(parentDetails, result)
+        assertEquals(parentDetailsDto, result.toDto())
     }
 
     @Test
@@ -120,9 +142,27 @@ class ParentDetailsServiceImpTest {
 
 }
 
-
 private fun createTestParentDetails(): ParentDetails {
     return ParentDetails(
+        id = 1,
+        idNumber = "12345678",
+        phone = "0712345678",
+        occupation = "farmer",
+        relationship = "mother",
+        age = 50,
+        county = "Kirinyaga",
+        subCounty = "Kirinyaga Central",
+        ward = "Kerugoya",
+        firstName = "Jane",
+        surname = "Doe",
+        otherNames = "Doe",
+        status = "married",
+        type = "guardian",
+    )
+}
+
+private fun createTestParentDetailsDto(): ParentDetailsDto {
+    return ParentDetailsDto(
         id = 1,
         idNumber = "12345678",
         phone = "0712345678",
