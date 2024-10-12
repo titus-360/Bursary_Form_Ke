@@ -8,7 +8,7 @@ import java.util.Optional
 
 interface PersonalDetailsService {
 
-    fun savePersonalDetails(personalDetails: PersonalDetails): PersonalDetails
+    fun savePersonalDetails(personalDetailsDto: PersonalDetailsDto): PersonalDetailsDto
 
     fun getPersonalDetailsById(id: Long): PersonalDetails?
 

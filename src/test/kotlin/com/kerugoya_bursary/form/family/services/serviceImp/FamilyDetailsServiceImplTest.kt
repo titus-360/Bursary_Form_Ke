@@ -1,6 +1,10 @@
 package com.kerugoya_bursary.form.family.services.serviceImp
 
+import com.kerugoya_bursary.form.dtos.FamilyDetailsDto
+import com.kerugoya_bursary.form.dtos.ParentDetailsDto
+import com.kerugoya_bursary.form.dtos.SiblingsDto
 import com.kerugoya_bursary.form.exception.ResourceNotFoundException
+import com.kerugoya_bursary.form.mappers.FamilyDetailsMapper.toEntity
 import com.kerugoya_bursary.form.models.FamilyDetails
 import com.kerugoya_bursary.form.models.ParentDetails
 import com.kerugoya_bursary.form.models.Siblings
@@ -9,6 +13,7 @@ import com.kerugoya_bursary.form.services.serviceImp.FamilyDetailsServiceImpl
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
+import org.mockito.ArgumentMatchers.any
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.Mockito.`when`
@@ -19,7 +24,7 @@ import org.springframework.data.domain.PageRequest
 import java.util.*
 import kotlin.test.Test
 
-class FamilyDetailsServiceImplTest{
+class FamilyDetailsServiceImplTest {
 
     @Mock
     private lateinit var repository: FamilyDetailsRepository
@@ -36,7 +41,7 @@ class FamilyDetailsServiceImplTest{
     @DisplayName("Should return all family details")
     fun getAllFamilyDetails() {
         val pageable = PageRequest.of(0, 10)
-        val familyDetails =  createTestFamilyDetails()
+        val familyDetails = createTestFamilyDetails()
         val page: Page<FamilyDetails> = PageImpl(listOf(familyDetails))
 
         `when`(repository.findAll(pageable)).thenReturn(page)
@@ -50,13 +55,14 @@ class FamilyDetailsServiceImplTest{
     @Test
     @DisplayName("Should create a new family detail")
     fun createFamilyDetails() {
-        val familyDetails =  createTestFamilyDetails()
+        val familyDetailsDto = createTestFamilyDetailsDto()
+        val familyDetails = familyDetailsDto.toEntity()
 
-        `when`(repository.save(familyDetails)).thenReturn(familyDetails)
+        `when`(repository.save(any(FamilyDetails::class.java))).thenReturn(familyDetails)
 
-        val result = service.createFamilyDetails(familyDetails)
+        val result = service.createFamilyDetails(familyDetailsDto)
 
-        assertEquals(familyDetails, result)
+        assertEquals(familyDetailsDto, result)
     }
 
     @Test
@@ -85,15 +91,90 @@ class FamilyDetailsServiceImplTest{
     }
 
     @Test
-    @DisplayName("Should update a family detail")
-    fun updateFamilyDetails() {
-        val familyDetails =  createTestFamilyDetails()
+    @DisplayName("Should update family details successfully")
+    fun updateFamilyDetailsSuccessfully() {
+        val familyDetails = createTestFamilyDetails()
+        val familyDetailsDto = FamilyDetailsDto(
+            id = 1,
+            siblings = SiblingsDto(
+                id = familyDetails.siblings?.id,
+                primarySchool = familyDetails.siblings?.primarySchool,
+                secondarySchool = familyDetails.siblings?.secondarySchool,
+                university = familyDetails.siblings?.university,
+                tertiaryCollege = familyDetails.siblings?.tertiaryCollege
+            ),
+            parents = familyDetails.parents?.map { parent ->
+                ParentDetailsDto(
+                    id = parent.id,
+                    idNumber = parent.idNumber,
+                    phone = parent.phone,
+                    occupation = parent.occupation,
+                    relationship = parent.relationship,
+                    age = parent.age,
+                    county = parent.county,
+                    subCounty = parent.subCounty,
+                    ward = parent.ward,
+                    firstName = parent.firstName,
+                    surname = parent.surname,
+                    otherNames = parent.otherNames,
+                    status = parent.status,
+                    type = parent.type
+                )
+            }
+        )
+        val id = 1L
 
-        `when`(repository.save(familyDetails)).thenReturn(familyDetails)
+        `when`(repository.findById(id)).thenReturn(Optional.of(familyDetails))
+        `when`(repository.save(any(FamilyDetails::class.java))).thenAnswer { invocation ->
+            val savedFamilyDetails = invocation.getArgument<FamilyDetails>(0)
+            savedFamilyDetails.id = id // Ensure the id is set correctly
+            savedFamilyDetails
+        }
+        val result = service.updateFamilyDetails(id, familyDetailsDto)
+        // Manually set the id in the result to match the expected id
+        val expectedResult = familyDetailsDto
 
-        val result = service.updateFamilyDetails(familyDetails)
+        assertEquals(expectedResult, result)
+    }
 
-        assertEquals(familyDetails, result)
+    @Test
+    @DisplayName("Should throw exception when updating non-existing family details")
+    fun updateNonExistingFamilyDetails() {
+        val familyDetailsDto = FamilyDetailsDto(
+            id = 1,
+            siblings = SiblingsDto(
+                id = 1,
+                primarySchool = 1,
+                secondarySchool = 1,
+                university = 1,
+                tertiaryCollege = 1
+            ),
+            parents = listOf(
+                ParentDetailsDto(
+                    id = 1,
+                    idNumber = "12345678",
+                    phone = "0712345678",
+                    occupation = "farmer",
+                    relationship = "mother",
+                    age = 50,
+                    county = "Kirinyaga",
+                    subCounty = "Kirinyaga Central",
+                    ward = "Kerugoya",
+                    firstName = "Jane",
+                    surname = "Doe",
+                    otherNames = "Doe",
+                    status = "married",
+                    type = "guardian"
+                )
+            )
+        )
+        val id = 1L
+
+        `when`(repository.findById(id)).thenReturn(Optional.empty())
+
+        assertThrows(ResourceNotFoundException::class.java) {
+            service.updateFamilyDetails(id, familyDetailsDto)
+        }
     }
 
     @Test
@@ -122,12 +203,42 @@ class FamilyDetailsServiceImplTest{
     }
 }
 
-
 private fun createTestFamilyDetails(): FamilyDetails {
     return FamilyDetails(
         id = 1,
         siblings = createSibling(),
         parents = listOf(createParentDetails())
+    )
+}
+
+private fun createTestFamilyDetailsDto(): FamilyDetailsDto {
+    return FamilyDetailsDto(
+        id = 1,
+        siblings = SiblingsDto(
+            id = 1,
+            primarySchool = 1,
+            secondarySchool = 1,
+            university = 1,
+            tertiaryCollege = 1
+        ),
+        parents = listOf(
+            ParentDetailsDto(
+                id = 1,
+                idNumber = "12345678",
+                phone = "0712345678",
+                occupation = "farmer",
+                relationship = "mother",
+                age = 50,
+                county = "Kirinyaga",
+                subCounty = "Kirinyaga Central",
+                ward = "Kerugoya",
+                firstName = "Jane",
+                surname = "Doe",
+                otherNames = "Doe",
+                status = "married",
+                type = "guardian"
+            )
+        )
     )
 }
 

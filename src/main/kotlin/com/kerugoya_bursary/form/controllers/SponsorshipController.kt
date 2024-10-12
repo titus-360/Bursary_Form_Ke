@@ -36,9 +36,9 @@ class SponsorshipController(
 
     @PostMapping
     fun createSponsor(
-        @RequestBody sponsorshipDetails: SponsorshipDetails
-    ): ResponseEntity<SponsorshipDetails> {
-        return ResponseEntity.ok(service.createSponsorshipDetails(sponsorshipDetails))
+        @RequestBody sponsorshipDetailsDto: SponsorshipDetailsDto
+    ): ResponseEntity<SponsorshipDetailsDto> {
+        return ResponseEntity.ok(service.createSponsorshipDetails(sponsorshipDetailsDto))
     }
 
     @PutMapping("{id}")

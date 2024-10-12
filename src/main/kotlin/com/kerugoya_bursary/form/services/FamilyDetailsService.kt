@@ -11,7 +11,7 @@ interface FamilyDetailsService {
 
     fun getFamilyDetailsById(id: Long): FamilyDetails?
 
-    fun createFamilyDetails(familyDetails: FamilyDetails): FamilyDetails
+    fun createFamilyDetails(familyDetailsDto: FamilyDetailsDto): FamilyDetailsDto
 
     fun updateFamilyDetails(id : Long, familyDetailsDto: FamilyDetailsDto): FamilyDetailsDto
 

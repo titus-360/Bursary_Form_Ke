@@ -26,7 +26,7 @@ class SwaggerConfig {
         return OpenAPI()
             .info(
                 Info()
-                    .title("Form Automation API")
+                    .title("Kerugoya Bursary Automation API")
                     .version("1.0")
                     .description("API documentation for the Kerugoya Bursary Form Automation Application")
             )

@@ -19,7 +19,7 @@ import java.math.BigDecimal
 import java.util.*
 import kotlin.test.Test
 
-class SponsorshipDetailsServiceImpTest{
+class SponsorshipDetailsServiceImpTest {
 
     @Mock
     private lateinit var repository: SponsorShipDetailsRepository
@@ -36,7 +36,7 @@ class SponsorshipDetailsServiceImpTest{
     @DisplayName("Should return all sponsorship details")
     fun getAllSponsorshipDetails() {
         val pageable = PageRequest.of(0, 10)
-        val sponsorshipDetails =  createTestSponsorshipDetails()
+        val sponsorshipDetails = createTestSponsorshipDetails()
         val page: Page<SponsorshipDetails> = PageImpl(listOf(sponsorshipDetails))
 
         `when`(repository.findAll(pageable)).thenReturn(page)
@@ -47,16 +47,29 @@ class SponsorshipDetailsServiceImpTest{
         assertEquals(sponsorshipDetails, result.content[0])
     }
 
+    private fun SponsorshipDetails.toDto(): SponsorshipDetailsDto {
+        return SponsorshipDetailsDto(
+            feesRequired = this.feesRequired ?: BigDecimal.ZERO,
+            feesBalance = this.feesBalance ?: BigDecimal.ZERO,
+            bursaryReceived = this.bursaryReceived ?: BigDecimal.ZERO
+        )
+    }
+
     @Test
     @DisplayName("Should create a new sponsorship detail")
     fun createSponsorshipDetails() {
-        val sponsorshipDetails =  createTestSponsorshipDetails()
+        val sponsorshipDetailsDto = createTestSponsorshipDetailsDto()
+        val sponsorshipDetails = SponsorshipDetails(
+            feesRequired = sponsorshipDetailsDto.feesRequired,
+            bursaryReceived = sponsorshipDetailsDto.bursaryReceived,
+            feesBalance = sponsorshipDetailsDto.feesBalance
+        )
 
         `when`(repository.save(sponsorshipDetails)).thenReturn(sponsorshipDetails)
 
-        val result = service.createSponsorshipDetails(sponsorshipDetails)
+        val result = service.createSponsorshipDetails(sponsorshipDetailsDto)
 
-        assertEquals(sponsorshipDetails, result)
+        assertEquals(sponsorshipDetailsDto, result)
     }
 
     @Test
@@ -97,7 +110,7 @@ class SponsorshipDetailsServiceImpTest{
         val result = service.updateSponsorshipDetails(id, sponsorshipDetailsDto)
 
         assertEquals(sponsorshipDetailsDto.feesRequired, result.feesRequired)
-        assertEquals(sponsorshipDetailsDto.bursaryreceived, result.bursaryReceived)
+        assertEquals(sponsorshipDetailsDto.bursaryReceived, result.bursaryReceived)
         assertEquals(sponsorshipDetailsDto.feesBalance, result.feesBalance)
     }
 
@@ -153,6 +166,6 @@ private fun createTestSponsorshipDetailsDto(): SponsorshipDetailsDto {
     return SponsorshipDetailsDto(
         feesRequired = BigDecimal.valueOf(20000),
         feesBalance = BigDecimal.valueOf(3000),
-        bursaryreceived = BigDecimal.valueOf(10000)
+        bursaryReceived = BigDecimal.valueOf(10000)
     )
 }

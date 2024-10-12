@@ -27,4 +27,4 @@ data class FamilyDetails(
     @OneToOne(cascade = [CascadeType.ALL])
     @JoinColumn(name = "siblings_id")
     var siblings: Siblings?
-)
+) : BaseAudit()

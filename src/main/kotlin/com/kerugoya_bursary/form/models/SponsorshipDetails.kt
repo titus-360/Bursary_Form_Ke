@@ -28,4 +28,4 @@ data class SponsorshipDetails(
 
     @Column(name = "fees_balance")
     var feesBalance: BigDecimal? = null
-)
+) : BaseAudit()

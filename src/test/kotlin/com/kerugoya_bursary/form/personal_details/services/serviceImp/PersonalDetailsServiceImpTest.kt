@@ -2,6 +2,7 @@ package com.kerugoya_bursary.form.personal_details.services.serviceImp
 
 import com.kerugoya_bursary.form.dtos.PersonalDetailsDto
 import com.kerugoya_bursary.form.exception.ResourceNotFoundException
+import com.kerugoya_bursary.form.mappers.PersonalDetailsMapper.toEntity
 import com.kerugoya_bursary.form.models.PersonalDetails
 import com.kerugoya_bursary.form.repositories.PersonalDetailsRepository
 import com.kerugoya_bursary.form.services.serviceImp.PersonalDetailsServiceImp
@@ -18,7 +19,7 @@ import org.springframework.data.domain.PageRequest
 import java.util.*
 import kotlin.test.Test
 
-class PersonalDetailsServiceImpTest{
+class PersonalDetailsServiceImpTest {
 
     @Mock
     private lateinit var repository: PersonalDetailsRepository
@@ -49,13 +50,14 @@ class PersonalDetailsServiceImpTest{
     @Test
     @DisplayName("Should create a new personal detail")
     fun createPersonalDetails() {
-        val personalDetails = createTestPersonalDetails()
+        val personalDetailsDto = createTestPersonalDetailsDto()
+        val personalDetails = personalDetailsDto.toEntity()
 
-        `when`(repository.save(personalDetails)).thenReturn(personalDetails)
+        Mockito.`when`(repository.save(personalDetails)).thenReturn(personalDetails)
 
-        val result = service.savePersonalDetails(personalDetails)
+        val result = service.savePersonalDetails(personalDetailsDto)
 
-        assertEquals(personalDetails, result)
+        assertEquals(personalDetailsDto, result)
     }
 
     @Test
@@ -154,7 +156,6 @@ class PersonalDetailsServiceImpTest{
 }
 
 
-
 private fun createTestPersonalDetails(): PersonalDetails {
     return PersonalDetails(
         id = 1,
@@ -178,7 +179,7 @@ private fun createTestPersonalDetails(): PersonalDetails {
 }
 
 private fun createTestPersonalDetailsDto(): PersonalDetailsDto {
-    return  PersonalDetailsDto(
+    return PersonalDetailsDto(
         firstName = "Jane",
         surname = "Doe",
         otherNames = "Doe",

@@ -30,9 +30,9 @@ class PersonalDetailsController(
 
     @PostMapping
     fun createPersonalDetail(
-        @RequestBody personalDetails: PersonalDetails
-    ): ResponseEntity<PersonalDetails> {
-        return ResponseEntity.ok(service.savePersonalDetails(personalDetails))
+        @RequestBody personalDetailsDto: PersonalDetailsDto
+    ): ResponseEntity<PersonalDetailsDto> {
+        return ResponseEntity.ok(service.savePersonalDetails(personalDetailsDto))
     }
 
     @GetMapping("{id}")

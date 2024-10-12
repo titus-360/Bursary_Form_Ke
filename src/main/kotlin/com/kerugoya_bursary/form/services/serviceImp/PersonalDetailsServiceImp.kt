@@ -2,6 +2,8 @@ package com.kerugoya_bursary.form.services.serviceImp
 
 import com.kerugoya_bursary.form.dtos.PersonalDetailsDto
 import com.kerugoya_bursary.form.exception.ResourceNotFoundException
+import com.kerugoya_bursary.form.mappers.PersonalDetailsMapper.toDto
+import com.kerugoya_bursary.form.mappers.PersonalDetailsMapper.toEntity
 import com.kerugoya_bursary.form.models.PersonalDetails
 import com.kerugoya_bursary.form.repositories.PersonalDetailsRepository
 import com.kerugoya_bursary.form.services.PersonalDetailsService
@@ -13,8 +15,11 @@ import org.springframework.stereotype.Service
 class PersonalDetailsServiceImp(
     private val personalDetailsRepository: PersonalDetailsRepository
 ) : PersonalDetailsService {
-    override fun savePersonalDetails(personalDetails: PersonalDetails): PersonalDetails {
-        return personalDetailsRepository.save(personalDetails)
+
+    override fun savePersonalDetails(personalDetailsDto: PersonalDetailsDto): PersonalDetailsDto {
+        val personalDetails = personalDetailsDto.toEntity()
+        val savedPersonalDetails = personalDetailsRepository.save(personalDetails)
+        return savedPersonalDetails.toDto()
     }
 
     override fun getPersonalDetailsById(id: Long): PersonalDetails? {
